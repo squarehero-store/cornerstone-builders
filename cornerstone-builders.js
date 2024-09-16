@@ -27,53 +27,61 @@
     }
 
     // Load stylesheets
-    loadStylesheet(`https://cdn.jsdelivr.net/gh/squarehero-store/cornerstone-builders@0/cornerstone-builders.min.css?v=${getCacheBuster()}`);
-    loadStylesheet(`https://cdn.jsdelivr.net/gh/squarehero-store/list-block@0/list-block.min.css?v=${getCacheBuster()}`);
-    loadStylesheet(`https://cdn.jsdelivr.net/gh/squarehero-store/portfolio-overlay@0/portfolio-overlay.min.css?v=${getCacheBuster()}`);
-    loadStylesheet(`https://cdn.jsdelivr.net/gh/squarehero-store/back-to-top@1/back-to-top.min.css?v=${getCacheBuster()}`);
+    function loadStylesheets() {
+        loadStylesheet(`https://cdn.jsdelivr.net/gh/squarehero-store/cornerstone-builders@0/cornerstone-builders.min.css?v=${getCacheBuster()}`);
+        loadStylesheet(`https://cdn.jsdelivr.net/gh/squarehero-store/list-block@0/list-block.min.css?v=${getCacheBuster()}`);
+        loadStylesheet(`https://cdn.jsdelivr.net/gh/squarehero-store/portfolio-overlay@0/portfolio-overlay.min.css?v=${getCacheBuster()}`);
+        loadStylesheet(`https://cdn.jsdelivr.net/gh/squarehero-store/back-to-top@1/back-to-top.min.css?v=${getCacheBuster()}`);
+    }
 
     // Load external scripts
-    Promise.all([
-        loadScript(`https://cdn.jsdelivr.net/gh/squarehero-store/list-block@0/list-block.min.js?v=${getCacheBuster()}`),
-        loadScript(`https://cdn.jsdelivr.net/gh/squarehero-store/portfolio-overlay@0/portfolio-overlay.min.js?v=${getCacheBuster()}`),
-        loadScript(`https://cdn.jsdelivr.net/gh/squarehero-store/back-to-top@1/back-to-top.min.js?v=${getCacheBuster()}`)
-    ]).then(() => {
-        console.log('All external scripts loaded successfully');
-    }).catch(error => {
-        console.error('Error loading external scripts:', error);
-    });
+    function loadExternalScripts() {
+        return Promise.all([
+            loadScript(`https://cdn.jsdelivr.net/gh/squarehero-store/list-block@0/list-block.min.js?v=${getCacheBuster()}`),
+            loadScript(`https://cdn.jsdelivr.net/gh/squarehero-store/portfolio-overlay@0/portfolio-overlay.min.js?v=${getCacheBuster()}`),
+            loadScript(`https://cdn.jsdelivr.net/gh/squarehero-store/back-to-top@1/back-to-top.min.js?v=${getCacheBuster()}`)
+        ]).then(() => {
+            console.log('All external scripts loaded successfully');
+        }).catch(error => {
+            console.error('Error loading external scripts:', error);
+        });
+    }
 
     // Footer copyright functionality
-    try {
-        const siteJsonUrl = `${window.location.origin}/?format=json-pretty`;
-        fetch(siteJsonUrl)
-            .then(response => response.json())
-            .then(data => {
-                const siteTitle = data.website.siteTitle;
-                const siteTitleElement = document.querySelector('.site-title');
-                if (siteTitleElement) {
-                    siteTitleElement.textContent = siteTitle;
-                }
-            })
-            .catch(error => console.error('Error fetching site title:', error));
-    } catch (error) {
-        console.error("Error in footer copyright functionality:", error);
+    function updateFooterCopyright() {
+        try {
+            const siteJsonUrl = `${window.location.origin}/?format=json-pretty`;
+            fetch(siteJsonUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const siteTitle = data.website.siteTitle;
+                    const siteTitleElement = document.querySelector('.site-title');
+                    if (siteTitleElement) {
+                        siteTitleElement.textContent = siteTitle;
+                    }
+                })
+                .catch(error => console.error('Error fetching site title:', error));
+        } catch (error) {
+            console.error("Error in footer copyright functionality:", error);
+        }
     }
 
     // Section classes functionality
-    try {
-        const sections = document.querySelectorAll(".page-section");
-        sections.forEach(function(section) {
-            const savedDiv = section.querySelector('div[data-squarehero="section-name"]');
-            if (savedDiv) {
-                const shSectionValue = savedDiv.getAttribute('sh-section');
-                if (shSectionValue) {
-                    section.classList.add(shSectionValue);
+    function updateSectionClasses() {
+        try {
+            const sections = document.querySelectorAll(".page-section");
+            sections.forEach(function(section) {
+                const savedDiv = section.querySelector('div[data-squarehero="section-name"]');
+                if (savedDiv) {
+                    const shSectionValue = savedDiv.getAttribute('sh-section');
+                    if (shSectionValue) {
+                        section.classList.add(shSectionValue);
+                    }
                 }
-            }
-        });
-    } catch (error) {
-        console.error("Error in section classes functionality:", error);
+            });
+        } catch (error) {
+            console.error("Error in section classes functionality:", error);
+        }
     }
 
     // License checking functionality
@@ -134,15 +142,11 @@
             });
     }
 
-    // Run license check when DOM is fully loaded
-    document.addEventListener('DOMContentLoaded', checkLicense);
-
     // Form section functionality
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log('DOM fully loaded and parsed');
+    function setupFormFunctionality() {
+        console.log('Setting up form functionality');
         
-        // Select all buttons with '#form' in their href
-        var formButtons = document.querySelectorAll('a[href*="#form"]');
+        const formButtons = document.querySelectorAll('a[href*="#form"]');
         console.log('Form buttons found:', formButtons.length);
         formButtons.forEach(function(button) {
             console.log('Adding click event listener to button:', button);
@@ -152,22 +156,18 @@
                 e.preventDefault();
                 console.log('Default action prevented');
                 
-                // Look for the form in the footer
-                var ctaForm = document.querySelector('footer .sh-cta-form');
+                const ctaForm = document.querySelector('footer .sh-cta-form');
                 console.log('CTA Form found on click:', ctaForm);
                 if (ctaForm) {
                     if (!ctaForm.classList.contains('active')) {
                         console.log('Opening form');
                         ctaForm.classList.add('active');
                         ctaForm.style.display = 'block';
-                        // Force a reflow
-                        ctaForm.offsetHeight;
                         ctaForm.style.maxHeight = ctaForm.scrollHeight + 'px';
                         console.log('Form display set to block, maxHeight set to', ctaForm.scrollHeight + 'px');
                     } else {
                         console.log('Form is already open');
                     }
-                    // Scroll to the form regardless of whether it was just opened or was already open
                     ctaForm.scrollIntoView({ behavior: 'smooth' });
                     console.log('Scrolling to form');
                 } else {
@@ -175,29 +175,60 @@
                 }
             });
         });
-    });
-    console.log('Site-wide form reveal script loaded and executed');
+    }
 
     // Header functionality
-    document.addEventListener('DOMContentLoaded', function() {
-        // Select the .header-actions--right element
+    function setupHeaderFunctionality() {
+        console.log('Setting up header functionality');
         const headerActionsRight = document.querySelector('.header-nav');
         const headerTitle = document.querySelector('.header-display-desktop');
         if (headerActionsRight && headerTitle) {
-            // Move the .header-actions--right to be the last child of .header-title
             headerTitle.appendChild(headerActionsRight);
+            console.log('Header nav moved successfully');
+        } else {
+            console.log('Header elements not found');
         }
-    });
+    }
 
     // Dark mode header functionality
-    document.addEventListener("DOMContentLoaded", function() {
+    function setupDarkModeHeader() {
+        console.log('Setting up dark mode header');
         const metaTag = document.querySelector('meta[squarehero-feature="header"][darkmode="true"]');
         
         if (metaTag) {
             const header = document.querySelector('#header');
             if (header) {
                 header.classList.add('header--dark-mode');
+                console.log('Dark mode applied to header');
+            } else {
+                console.log('Header element not found');
             }
+        } else {
+            console.log('Dark mode meta tag not found');
         }
-    });
+    }
+
+    // Function to run all setup functions
+    function runSetup() {
+        loadStylesheets();
+        loadExternalScripts().then(() => {
+            updateFooterCopyright();
+            updateSectionClasses();
+            checkLicense();
+            setupFormFunctionality();
+            setupHeaderFunctionality();
+            setupDarkModeHeader();
+        });
+    }
+
+    // Run setup when DOM is fully loaded
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', runSetup);
+    } else {
+        runSetup();
+    }
+
+    // Run setup again after a short delay (in case of any dynamic content loading)
+    setTimeout(runSetup, 1000);
+
 })();

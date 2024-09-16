@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 
 const directoryPath = __dirname;
-const templateName = 'cafe-cozy';
+const templateName = 'cornerstone-builders';
 
 function getCSSFile(directory, template) {
   const files = fs.readdirSync(directory);
