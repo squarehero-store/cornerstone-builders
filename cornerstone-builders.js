@@ -209,6 +209,26 @@
         });
     }
 
+    // Load and initialize Portfolio Overlay plugin
+    function loadPortfolioOverlayPlugin() {
+        const cacheBuster = getCacheBuster();
+        Promise.all([
+            loadScript(`https://cdn.jsdelivr.net/gh/squarehero-store/portfolio-overlay@0/portfolio-overlay.min.js?v=${cacheBuster}`),
+            loadStylesheet(`https://cdn.jsdelivr.net/gh/squarehero-store/portfolio-overlay@0/portfolio-overlay.min.css?v=${cacheBuster}`)
+        ]).then(() => {
+            console.log('SH: Portfolio Overlay plugin loaded');
+            // Check if the plugin's init function exists and call it
+            if (typeof initPortfolioOverlay === 'function') {
+                initPortfolioOverlay();
+                console.log('SH: Portfolio Overlay plugin initialized');
+            } else {
+                console.error('SH: Portfolio Overlay plugin initialization function not found');
+            }
+        }).catch(error => {
+            console.error('SH: Error loading Portfolio Overlay plugin:', error);
+        });
+    }
+
     // Main setup function
     function setup() {
         updateFooterCopyright();
@@ -218,6 +238,7 @@
         setupDarkModeHeader();
         checkLicense();
         loadBackToTopPlugin();
+        loadPortfolioOverlayPlugin();
     }
 
     // Run setup when DOM is fully loaded
