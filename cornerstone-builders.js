@@ -2,7 +2,15 @@
 //   SquareHero Cornerstone Builders Template Files 
 // =================================================
 (function() {
-    // Helper function to load external script
+    // Function to get 60-minute cache buster
+    function getCacheBuster() {
+        const now = new Date();
+        const hours = now.getUTCHours();
+        const minutes = now.getUTCMinutes();
+        return `${hours}.${Math.floor(minutes / 60)}`;
+    }
+
+    // Function to load a script
     function loadScript(src) {
         return new Promise((resolve, reject) => {
             const script = document.createElement('script');
@@ -13,38 +21,49 @@
         });
     }
 
-    // Helper function to load external stylesheet
+    // Function to load a stylesheet
     function loadStylesheet(href) {
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = href;
-        document.head.appendChild(link);
-    }
-
-    // Function to get cache buster
-    function getCacheBuster() {
-        return new Date().getTime();
-    }
-
-    // Load stylesheets
-    function loadStylesheets() {
-        loadStylesheet(`https://cdn.jsdelivr.net/gh/squarehero-store/cornerstone-builders@0/cornerstone-builders.min.css?v=${getCacheBuster()}`);
-        loadStylesheet(`https://cdn.jsdelivr.net/gh/squarehero-store/list-block@0/list-block.min.css?v=${getCacheBuster()}`);
-        loadStylesheet(`https://cdn.jsdelivr.net/gh/squarehero-store/portfolio-overlay@0/portfolio-overlay.min.css?v=${getCacheBuster()}`);
-        loadStylesheet(`https://cdn.jsdelivr.net/gh/squarehero-store/back-to-top@1/back-to-top.min.css?v=${getCacheBuster()}`);
-    }
-
-    // Load external scripts
-    function loadExternalScripts() {
-        return Promise.all([
-            loadScript(`https://cdn.jsdelivr.net/gh/squarehero-store/list-block@0/list-block.min.js?v=${getCacheBuster()}`),
-            loadScript(`https://cdn.jsdelivr.net/gh/squarehero-store/portfolio-overlay@0/portfolio-overlay.min.js?v=${getCacheBuster()}`),
-            loadScript(`https://cdn.jsdelivr.net/gh/squarehero-store/back-to-top@1/back-to-top.min.js?v=${getCacheBuster()}`)
-        ]).then(() => {
-            console.log('All external scripts loaded successfully');
-        }).catch(error => {
-            console.error('Error loading external scripts:', error);
+        return new Promise((resolve, reject) => {
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = href;
+            link.onload = resolve;
+            link.onerror = reject;
+            document.head.appendChild(link);
         });
+    }
+
+    // Load Cornerstone Builders main stylesheet
+    function loadCornerstoneBuildersCss() {
+        const cacheBuster = getCacheBuster();
+        return loadStylesheet(`https://cdn.jsdelivr.net/gh/squarehero-store/cornerstone-builders@0/cornerstone-builders.min.css?v=${cacheBuster}`);
+    }
+
+    // Load and initialize List Block plugin
+    function loadListBlockPlugin() {
+        const cacheBuster = getCacheBuster();
+        return Promise.all([
+            loadStylesheet(`https://cdn.jsdelivr.net/gh/squarehero-store/list-block@0/list-block.min.css?v=${cacheBuster}`),
+            loadScript(`https://cdn.jsdelivr.net/gh/squarehero-store/list-block@0/list-block.min.js?v=${cacheBuster}`)
+        ]);
+    }
+
+    // Load and initialize Portfolio Overlay plugin
+    function loadPortfolioOverlayPlugin() {
+        const cacheBuster = getCacheBuster();
+        return Promise.all([
+            loadStylesheet(`https://cdn.jsdelivr.net/gh/squarehero-store/portfolio-overlay@0/portfolio-overlay.min.css?v=${cacheBuster}`),
+            loadScript(`https://cdn.jsdelivr.net/gh/squarehero-store/portfolio-overlay@0/portfolio-overlay.min.js?v=${cacheBuster}`)
+        ]);
+    }
+
+    // Load and initialize Back to Top plugin
+    function loadBackToTopPlugin() {
+        const cacheBuster = getCacheBuster();
+        return Promise.all([
+            loadStylesheet(`https://cdn.jsdelivr.net/gh/squarehero-store/back-to-top@1/back-to-top.min.css?v=${cacheBuster}`),
+            loadScript(`https://cdn.jsdelivr.net/gh/squarehero-store/back-to-top@1/back-to-top.min.js?v=${cacheBuster}`)
+        ]);
     }
 
     // Footer copyright functionality
@@ -210,14 +229,21 @@
 
     // Function to run all setup functions
     function runSetup() {
-        loadStylesheets();
-        loadExternalScripts().then(() => {
+        Promise.all([
+            loadCornerstoneBuildersCss(),
+            loadListBlockPlugin(),
+            loadPortfolioOverlayPlugin(),
+            loadBackToTopPlugin()
+        ]).then(() => {
+            console.log('All resources loaded successfully');
             updateFooterCopyright();
             updateSectionClasses();
             checkLicense();
             setupFormFunctionality();
             setupHeaderFunctionality();
             setupDarkModeHeader();
+        }).catch(error => {
+            console.error('Error loading resources:', error);
         });
     }
 
