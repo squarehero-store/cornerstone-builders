@@ -2,37 +2,72 @@
 //   SquareHero Cornerstone Builders Template Files 
 // =================================================
 (function() {
+    // Function to get cache buster
+    function getCacheBuster() {
+        const now = new Date();
+        const hours = now.getUTCHours();
+        const minutes = now.getUTCMinutes();
+        return `${hours}.${Math.floor(minutes / 1)}`;
+    }
+
+    // Function to load script
+    function loadScript(src) {
+        return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.src = src;
+            script.onload = resolve;
+            script.onerror = reject;
+            document.head.appendChild(script);
+        });
+    }
+
+    // Function to load stylesheet
+    function loadStylesheet(href) {
+        return new Promise((resolve, reject) => {
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = href;
+            link.onload = resolve;
+            link.onerror = reject;
+            document.head.appendChild(link);
+        });
+    }
+
     // Footer copyright functionality
-    try {
-        const siteJsonUrl = `${window.location.origin}/?format=json-pretty`;
-        fetch(siteJsonUrl)
-            .then(response => response.json())
-            .then(data => {
-                const siteTitle = data.website.siteTitle;
-                const siteTitleElement = document.querySelector('.site-title');
-                if (siteTitleElement) {
-                    siteTitleElement.textContent = siteTitle;
-                }
-            })
-            .catch(error => console.error('Error fetching site title:', error));
-    } catch (error) {
-        console.error("Error in footer copyright functionality:", error);
+    function updateFooterCopyright() {
+        try {
+            const siteJsonUrl = `${window.location.origin}/?format=json-pretty`;
+            fetch(siteJsonUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const siteTitle = data.website.siteTitle;
+                    const siteTitleElement = document.querySelector('.site-title');
+                    if (siteTitleElement) {
+                        siteTitleElement.textContent = siteTitle;
+                    }
+                })
+                .catch(error => console.error('Error fetching site title:', error));
+        } catch (error) {
+            console.error("Error in footer copyright functionality:", error);
+        }
     }
 
     // Section classes functionality
-    try {
-        const sections = document.querySelectorAll(".page-section");
-        sections.forEach(function(section) {
-            const savedDiv = section.querySelector('div[data-squarehero="section-name"]');
-            if (savedDiv) {
-                const shSectionValue = savedDiv.getAttribute('sh-section');
-                if (shSectionValue) {
-                    section.classList.add(shSectionValue);
+    function updateSectionClasses() {
+        try {
+            const sections = document.querySelectorAll(".page-section");
+            sections.forEach(function(section) {
+                const savedDiv = section.querySelector('div[data-squarehero="section-name"]');
+                if (savedDiv) {
+                    const shSectionValue = savedDiv.getAttribute('sh-section');
+                    if (shSectionValue) {
+                        section.classList.add(shSectionValue);
+                    }
                 }
-            }
-        });
-    } catch (error) {
-        console.error("Error in section classes functionality:", error);
+            });
+        } catch (error) {
+            console.error("Error in section classes functionality:", error);
+        }
     }
 
     // Form section functionality
@@ -96,7 +131,7 @@
         }
     }
 
-    ///// License checking functionality ////
+    // License checking functionality
     function checkLicense() {
         const currentUrl = window.location.href;
         const jsonUrl = currentUrl + (currentUrl.includes('?') ? '&' : '?') + 'format=json';
@@ -154,40 +189,41 @@
             });
     }
 
-    // Run license check when DOM is fully loaded
-    document.addEventListener('DOMContentLoaded', checkLicense);
-
-    // Integrated Back to Top Plugin with 60-minute cache buster
-    (function(){
-        function getCacheBuster() {
-            const now = new Date();
-            const hours = now.getUTCHours();
-            const minutes = now.getUTCMinutes();
-            return `${hours}.${Math.floor(minutes / 60)}`;
-        }
-
+    // Load and initialize Back to Top plugin
+    function loadBackToTopPlugin() {
         const cacheBuster = getCacheBuster();
-
-        const script = document.createElement('script');
-        script.src = `https://cdn.jsdelivr.net/gh/squarehero-store/back-to-top@1/back-to-top.min.js?v=${cacheBuster}`;
-        document.head.appendChild(script);
-
-        const link = document.createElement("link");
-        link.rel = "stylesheet";
-        link.href = `https://cdn.jsdelivr.net/gh/squarehero-store/back-to-top@1/back-to-top.min.css?v=${cacheBuster}`;
-        document.head.appendChild(link);
-    })();
-
-    // Run setup when DOM is fully loaded
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function() {
-            setupFormFunctionality();
-            setupHeaderFunctionality();
-            setupDarkModeHeader();
+        Promise.all([
+            loadScript(`https://cdn.jsdelivr.net/gh/squarehero-store/back-to-top@1/back-to-top.min.js?v=${cacheBuster}`),
+            loadStylesheet(`https://cdn.jsdelivr.net/gh/squarehero-store/back-to-top@1/back-to-top.min.css?v=${cacheBuster}`)
+        ]).then(() => {
+            console.log('SH: Back to Top plugin loaded');
+            // Check if the plugin's init function exists and call it
+            if (typeof initBackToTop === 'function') {
+                initBackToTop();
+                console.log('SH: Back to Top plugin initialized');
+            } else {
+                console.error('SH: Back to Top plugin initialization function not found');
+            }
+        }).catch(error => {
+            console.error('SH: Error loading Back to Top plugin:', error);
         });
-    } else {
+    }
+
+    // Main setup function
+    function setup() {
+        updateFooterCopyright();
+        updateSectionClasses();
         setupFormFunctionality();
         setupHeaderFunctionality();
         setupDarkModeHeader();
+        checkLicense();
+        loadBackToTopPlugin();
+    }
+
+    // Run setup when DOM is fully loaded
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', setup);
+    } else {
+        setup();
     }
 })();
