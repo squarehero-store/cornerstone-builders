@@ -72,29 +72,18 @@
 
     // Form section functionality
     function setupFormFunctionality() {
-        console.log('SH: Setting up form functionality');
-        
         const formButtons = document.querySelectorAll('a[href*="#form"]');
-        console.log('SH: Form buttons found:', formButtons.length);
         formButtons.forEach(function(button) {
             button.addEventListener('click', function(e) {
-                console.log('SH: Form button clicked');
                 e.preventDefault();
-                
                 const ctaForm = document.querySelector('footer .sh-cta-form');
                 if (ctaForm) {
                     if (!ctaForm.classList.contains('active')) {
                         ctaForm.classList.add('active');
                         ctaForm.style.display = 'block';
                         ctaForm.style.maxHeight = ctaForm.scrollHeight + 'px';
-                        console.log('SH: Form opened');
-                    } else {
-                        console.log('SH: Form is already open');
                     }
                     ctaForm.scrollIntoView({ behavior: 'smooth' });
-                    console.log('SH: Scrolled to form');
-                } else {
-                    console.error('SH: Form not found in footer');
                 }
             });
         });
@@ -102,32 +91,21 @@
 
     // Header functionality
     function setupHeaderFunctionality() {
-        console.log('SH: Setting up header functionality');
         const headerActionsRight = document.querySelector('.header-nav');
         const headerTitle = document.querySelector('.header-display-desktop');
         if (headerActionsRight && headerTitle) {
             headerTitle.appendChild(headerActionsRight);
-            console.log('SH: Header nav moved successfully');
-        } else {
-            console.log('SH: Header elements not found');
         }
     }
 
     // Dark mode header functionality
     function setupDarkModeHeader() {
-        console.log('SH: Setting up dark mode header');
         const metaTag = document.querySelector('meta[squarehero-feature="header"][darkmode="true"]');
-        
         if (metaTag) {
             const header = document.querySelector('#header');
             if (header) {
                 header.classList.add('header--dark-mode');
-                console.log('SH: Dark mode applied to header');
-            } else {
-                console.log('SH: Header element not found');
             }
-        } else {
-            console.log('SH: Dark mode meta tag not found');
         }
     }
 
@@ -192,40 +170,39 @@
     // Load and initialize Back to Top plugin
     function loadBackToTopPlugin() {
         const cacheBuster = getCacheBuster();
-        Promise.all([
+        return Promise.all([
             loadScript(`https://cdn.jsdelivr.net/gh/squarehero-store/back-to-top@1/back-to-top.min.js?v=${cacheBuster}`),
             loadStylesheet(`https://cdn.jsdelivr.net/gh/squarehero-store/back-to-top@1/back-to-top.min.css?v=${cacheBuster}`)
         ]).then(() => {
-            console.log('SH: Back to Top plugin loaded');
-            // Check if the plugin's init function exists and call it
             if (typeof initBackToTop === 'function') {
                 initBackToTop();
-                console.log('SH: Back to Top plugin initialized');
-            } else {
-                console.error('SH: Back to Top plugin initialization function not found');
             }
-        }).catch(error => {
-            console.error('SH: Error loading Back to Top plugin:', error);
         });
     }
 
     // Load and initialize Portfolio Overlay plugin
     function loadPortfolioOverlayPlugin() {
         const cacheBuster = getCacheBuster();
-        Promise.all([
+        return Promise.all([
             loadScript(`https://cdn.jsdelivr.net/gh/squarehero-store/portfolio-overlay@0/portfolio-overlay.min.js?v=${cacheBuster}`),
             loadStylesheet(`https://cdn.jsdelivr.net/gh/squarehero-store/portfolio-overlay@0/portfolio-overlay.min.css?v=${cacheBuster}`)
         ]).then(() => {
-            console.log('SH: Portfolio Overlay plugin loaded');
-            // Check if the plugin's init function exists and call it
             if (typeof initPortfolioOverlay === 'function') {
                 initPortfolioOverlay();
-                console.log('SH: Portfolio Overlay plugin initialized');
-            } else {
-                console.error('SH: Portfolio Overlay plugin initialization function not found');
             }
-        }).catch(error => {
-            console.error('SH: Error loading Portfolio Overlay plugin:', error);
+        });
+    }
+
+    // Load and initialize List Block plugin
+    function loadListBlockPlugin() {
+        const cacheBuster = getCacheBuster();
+        return Promise.all([
+            loadScript(`https://cdn.jsdelivr.net/gh/squarehero-store/list-block@0/list-block.min.js?v=${cacheBuster}`),
+            loadStylesheet(`https://cdn.jsdelivr.net/gh/squarehero-store/list-block@0/list-block.min.css?v=${cacheBuster}`)
+        ]).then(() => {
+            if (typeof initListBlock === 'function') {
+                initListBlock();
+            }
         });
     }
 
@@ -237,8 +214,16 @@
         setupHeaderFunctionality();
         setupDarkModeHeader();
         checkLicense();
-        loadBackToTopPlugin();
-        loadPortfolioOverlayPlugin();
+        
+        Promise.all([
+            loadBackToTopPlugin(),
+            loadPortfolioOverlayPlugin(),
+            loadListBlockPlugin()
+        ]).then(() => {
+            console.log('🚀 SquareHero.store Cornerstone Scripts loaded');
+        }).catch(error => {
+            console.error('Error loading SquareHero.store plugins:', error);
+        });
     }
 
     // Run setup when DOM is fully loaded
