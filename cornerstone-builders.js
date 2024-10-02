@@ -184,8 +184,8 @@
     function loadPortfolioOverlayPlugin() {
         const cacheBuster = getCacheBuster();
         return Promise.all([
-            loadScript(`https://cdn.jsdelivr.net/gh/squarehero-store/portfolio-overlay@0/portfolio-overlay.min.js?v=${cacheBuster}`),
-            loadStylesheet(`https://cdn.jsdelivr.net/gh/squarehero-store/portfolio-overlay@0/portfolio-overlay.min.css?v=${cacheBuster}`)
+            loadScript(`https://cdn.jsdelivr.net/gh/squarehero-store/portfolio-overlay@1/portfolio-overlay.min.js?v=${cacheBuster}`),
+            loadStylesheet(`https://cdn.jsdelivr.net/gh/squarehero-store/portfolio-overlay@1/portfolio-overlay.min.css?v=${cacheBuster}`)
         ]).then(() => {
             if (typeof initPortfolioOverlay === 'function') {
                 initPortfolioOverlay();
