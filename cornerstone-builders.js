@@ -91,22 +91,32 @@
 
     // Header functionality
     function setupHeaderFunctionality() {
-        const headerActionsRight = document.querySelector('.header-nav');
-        const headerTitle = document.querySelector('.header-display-desktop');
-        if (headerActionsRight && headerTitle) {
-            headerTitle.appendChild(headerActionsRight);
+        const metaTag = document.querySelector('meta[squarehero-customization="header"]');
+        if (metaTag && metaTag.getAttribute('enabled') === 'true') {
+            const headerActionsRight = document.querySelector('.header-nav');
+            const headerTitle = document.querySelector('.header-display-desktop');
+            if (headerActionsRight && headerTitle) {
+                headerTitle.appendChild(headerActionsRight);
+            }
+            document.body.classList.add('cornerstone-header');
         }
     }
 
     // Dark mode header functionality
     function setupDarkModeHeader() {
-        const metaTag = document.querySelector('meta[squarehero-customization="header"][darkmode="true"]');
-        if (metaTag) {
+        const metaTag = document.querySelector('meta[squarehero-customization="header"]');
+        if (metaTag && metaTag.getAttribute('enabled') === 'true' && metaTag.getAttribute('darkmode') === 'true') {
             const header = document.querySelector('#header');
             if (header) {
                 header.classList.add('header--dark-mode');
             }
         }
+    }
+
+    // New function to check if custom header is enabled
+    function isCustomHeaderEnabled() {
+        const metaTag = document.querySelector('meta[squarehero-customization="header"]');
+        return metaTag && metaTag.getAttribute('enabled') === 'true';
     }
 
     // License checking functionality
@@ -211,8 +221,12 @@
         updateFooterCopyright();
         updateSectionClasses();
         setupFormFunctionality();
-        setupHeaderFunctionality();
-        setupDarkModeHeader();
+        
+        if (isCustomHeaderEnabled()) {
+            setupHeaderFunctionality();
+            setupDarkModeHeader();
+        }
+        
         checkLicense();
         
         Promise.all([

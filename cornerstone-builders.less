@@ -425,6 +425,7 @@ box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.15);
 /////////////////////////////////////// HEADER
 ///////////////////////////////////////
 //// CUSTOM HEADER LAYOUT ////
+.cornerstone-header {
 #header {
   overflow:hidden;
 }
@@ -534,10 +535,22 @@ padding:0;
   /*Temp logo white*/
   .header-title-logo {
     filter:brightness(100);
-    
+  }
+  .header-display-desktop {
+    background:@charcoal;
+  }
+  .header-display-mobile {
+    background:@charcoal;
   }
 .header-title {
   background:@charcoal;
+}
+
+// HAMBURGER
+.burger-inner {
+  .top-bun,.patty,.bottom-bun {
+    background:@white!important;
+  }
 }
 
 .header-nav-wrapper {
@@ -631,6 +644,7 @@ padding:0;
   right: auto!important;
     left: -1em!important;
     text-align: left!important;
+}
 }
 
 /////////////////////////////////////// CART
