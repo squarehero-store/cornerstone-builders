@@ -41,26 +41,6 @@
         articleEntry.after(gallerySection);
       }
     }
-    
-    // Run the functions when the page loads
-    window.addEventListener('load', () => {
-      centerTallImages();
-      moveAndWrapGalleryBlock();
-    });
-    
-    // Run the centerTallImages function when images load
-    document.addEventListener('load', function(event) {
-      if (event.target.tagName.toLowerCase() === 'img') {
-        centerTallImages();
-      }
-    }, true);
-    
-    // Run the centerTallImages function when the window is resized
-    let resizeTimer;
-    window.addEventListener('resize', function() {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(centerTallImages, 250);
-    });
   
     // BANNER IMAGE SCRIPT
     function setupBannerImage() {
@@ -89,8 +69,6 @@
         }
       }
     }
-  
-    document.addEventListener('DOMContentLoaded', setupBannerImage);
   
     // Related Properties Script
     function setupRelatedProperties() {
@@ -310,10 +288,35 @@
       }
     }
   
-    // Run the main functions when the DOM is fully loaded
-    document.addEventListener('DOMContentLoaded', () => {
+    // New initialization function
+    function init() {
+      centerTallImages();
+      moveAndWrapGalleryBlock();
+      setupBannerImage();
       setupRelatedProperties();
       addButtonsAndExcerpt();
+    }
+  
+    // Function to check if DOM is already loaded
+    function domReady(fn) {
+      if (document.readyState === "complete" || document.readyState === "interactive") {
+        setTimeout(fn, 1);
+      } else {
+        document.addEventListener("DOMContentLoaded", fn);
+      }
+    }
+  
+    // Run init() when DOM is ready
+    domReady(init);
+  
+    // Also run centerTallImages when all images are loaded
+    window.addEventListener('load', centerTallImages);
+  
+    // Existing window resize listener
+    let resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(centerTallImages, 250);
     });
   
   })();
