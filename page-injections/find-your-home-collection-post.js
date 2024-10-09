@@ -184,8 +184,8 @@
     }
   
     function createPropertyCard(property) {
-      const card = document.createElement('div');
-      card.className = 'property-card mix';
+      const card = document.createElement('a');
+      card.className = 'property-card';
   
       let cardContent = `
         <div class="property-image">
@@ -202,7 +202,7 @@
             ${property.bathrooms ? `<span class="details-icon"><img src="https://cdn.jsdelivr.net/gh/squarehero-store/property-listings@main/Icons/Icon-Set_Bathroom.svg" alt="Bathrooms"> ${property.bathrooms}</span>` : ''}
             ${property.garage ? `<span class="details-icon"><img src="https://cdn.jsdelivr.net/gh/squarehero-store/property-listings@main/Icons/Icon-Set_Garage.svg" alt="Garage"> ${property.garage}</span>` : ''}
           </div>
-          <a href="${property.url}" class="sh-button">View Home</a>
+          <div class="sh-button">View Home</a>
         </div>
       `;
   
