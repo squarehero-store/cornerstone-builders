@@ -284,87 +284,9 @@ body.primary-button-shape-oval,.blog-more-link {
   }
 }
 
-
-
-//// LIST BLOCKS ////
-  .grid-container {
-    display: grid;
-    gap: 30px;
-    padding: 0px;
-	/*Column count*/
-     &.columns-2 {
-      grid-template-columns:~"repeat(2, 1fr)";
-       @media @mobile {
-         grid-template-columns:~"repeat(1, 1fr)"!important;
-       }
-    }
-    &.columns-3 {
-      grid-template-columns:~"repeat(3, 1fr)";
-      @media @mobile {
-         grid-template-columns:~"repeat(1, 1fr)";
-        gap:20px;
-       }
-    }
-  .grid-item {
-    border-radius: 5px;
-    overflow:hidden;
-
-    &__title {
-      font-size: 1.2em;
-      font-weight: bold;
-      margin-bottom: 10px;
-      @media @mobile {
-        margin-top:0;
-      }
-    }
-
-    &__description {
-      p {
-        margin: 0;
-      }
-    }
-    // IMAGES
-    .grid-item__image {
-    img {
-      width:100%;
-      aspect-ratio:3/2;
-    }
-    }
-    &.style-card {
-      padding:20px;
-      background:#fafafa;
-      border-radius:20px;
-box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.15);
-    }
-  }
-}
-
-  @media (max-width: 768px) {
-    .grid-container {
-      grid-template-columns: 1fr;
-    }
-  }
-
-/*Show accordion lists when script hasnt run in backend*/
-
-.sh-text-list-image,.sh-image-text-list { 
-  .accordion-items-container {
-    display:grid!important;
-     grid-template-columns: ~"repeat(3, 1fr)";
-    gap:30px;
-  }
-  .accordion-icon-container {
-    display:none;
-  }
-  .accordion-item__click-target {
-    padding:0!important;
-  }
-.accordion-item__dropdown {
-  display:block!important;
-}
-  .accordion-item__description {
-    padding-bottom:0!important;
-  }
+//// ACCORDIONS ////
+.accordion-divider {
+    display: none;
 }
 
 //// CONTACT FORMS
@@ -675,13 +597,13 @@ padding:0;
 #siteWrapper {
 .sh-footer {
   // LINKS
-  #block-yui_3_17_2_1_1722934452326_44727 {
-    p {
+  [data-block-type="2"] {
+  .sqsrte-small {
       display:flex;
       flex-wrap:wrap;
       gap:30px;
-    }
   }
+}
   // COPYRIGHT
 [data-squarehero="footer-copyright"] {
   text-align:right;
@@ -1074,21 +996,6 @@ line-height: 140%;
   }
 }
 
-/////////////////////////////////////// REMODELING
-///////////////////////////////////////
-.sh-text-list-image {
-
-}
-
-/////////////////////////////////////// WHY US
-///////////////////////////////////////
-
-//// TEXT LIST ////
-.sh-text-list-image-why {
-  .accordion-list {
-         grid-template-columns: ~"repeat(2, 1fr)";
-  }
-}
 
 /////////////////////////////////////// PORTFOLIO PAGE
 ///////////////////////////////////////

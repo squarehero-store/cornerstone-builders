@@ -221,83 +221,8 @@ body.primary-button-shape-oval .blog-more-link,
     transform: scale(1);
   }
 }
-.grid-container {
-  display: grid;
-  gap: 30px;
-  padding: 0px;
-  /*Column count*/
-}
-.grid-container.columns-2 {
-  grid-template-columns: repeat(2, 1fr);
-}
-@media only screen and (max-width: 750px) {
-  .grid-container.columns-2 {
-    grid-template-columns: repeat(1, 1fr) !important;
-  }
-}
-.grid-container.columns-3 {
-  grid-template-columns: repeat(3, 1fr);
-}
-@media only screen and (max-width: 750px) {
-  .grid-container.columns-3 {
-    grid-template-columns: repeat(1, 1fr);
-    gap: 20px;
-  }
-}
-.grid-container .grid-item {
-  border-radius: 5px;
-  overflow: hidden;
-}
-.grid-container .grid-item__title {
-  font-size: 1.2em;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-@media only screen and (max-width: 750px) {
-  .grid-container .grid-item__title {
-    margin-top: 0;
-  }
-}
-.grid-container .grid-item__description p {
-  margin: 0;
-}
-.grid-container .grid-item .grid-item__image img {
-  width: 100%;
-  aspect-ratio: 1.5;
-}
-.grid-container .grid-item.style-card {
-  padding: 20px;
-  background: #fafafa;
-  border-radius: 20px;
-  box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.15);
-}
-@media (max-width: 768px) {
-  .grid-container {
-    grid-template-columns: 1fr;
-  }
-}
-/*Show accordion lists when script hasnt run in backend*/
-.sh-text-list-image .accordion-items-container,
-.sh-image-text-list .accordion-items-container {
-  display: grid!important;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-}
-.sh-text-list-image .accordion-icon-container,
-.sh-image-text-list .accordion-icon-container {
+.accordion-divider {
   display: none;
-}
-.sh-text-list-image .accordion-item__click-target,
-.sh-image-text-list .accordion-item__click-target {
-  padding: 0!important;
-}
-.sh-text-list-image .accordion-item__dropdown,
-.sh-image-text-list .accordion-item__dropdown {
-  display: block!important;
-}
-.sh-text-list-image .accordion-item__description,
-.sh-image-text-list .accordion-item__description {
-  padding-bottom: 0!important;
 }
 .field-list {
   display: flex;
@@ -517,7 +442,7 @@ body.primary-button-shape-oval .blog-more-link,
   font-size: 1.2rem;
   margin-bottom: 50px;
 }
-#siteWrapper .sh-footer #block-yui_3_17_2_1_1722934452326_44727 p {
+#siteWrapper .sh-footer [data-block-type="2"] .sqsrte-small {
   display: flex;
   flex-wrap: wrap;
   gap: 30px;
@@ -860,9 +785,6 @@ body:not(.sqs-edit-mode-active) .sh-cta-form {
   .sh-featured-portfolio-mini .sh-blog-post-grid {
     grid-template-columns: repeat(1, 1fr) !important;
   }
-}
-.sh-text-list-image-why .accordion-list {
-  grid-template-columns: repeat(2, 1fr);
 }
 .PortfolioStyles #portfolioContainer .portfolio-grid {
   display: grid;
