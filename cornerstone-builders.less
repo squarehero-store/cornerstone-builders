@@ -981,7 +981,10 @@ line-height: 140%;
   .sh-blog-post-title {
     position: absolute;
     bottom: 20px;
-    left: 15px;
+    left:0;
+    width:100%;
+    padding-left: 15px;
+    padding-right: 15px;
     font-size: 1.05rem;
     font-weight: 600;
     margin: 0;
@@ -994,6 +997,7 @@ line-height: 140%;
   text-overflow: ellipsis;
   max-height: 1.2em; 
   line-height: 1.2em;
+  box-sizing:border-box;
   }
   // Add hover effects
   .sh-blog-post-item:hover {
