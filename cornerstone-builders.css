@@ -963,7 +963,7 @@ body:not(.sqs-edit-mode-active) .sh-cta-form {
   display: none;
 }
 .portfolio-page.view-item .header {
-  position: relative;
+  position: relative!important;
 }
 .portfolio-page.view-item .content-collection {
   padding-top: 0 !important;

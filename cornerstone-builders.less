@@ -1451,50 +1451,57 @@ body:not(.sqs-edit-mode-active) {
     display: none;
   }
 
-  // GALLERY
-  article.entry {
-    @media @mobile {
-      margin-top: 0;
-    }
+ // GALLERY
+article.entry {
+  @media @mobile {
+    margin-top: 0;
+  }
 
-    .sqs-gallery-block-stacked {
-      margin-top: 100px;
-
-      .sqs-gallery {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 30px;
-
-        .image-wrapper {
-          flex: 0 0 calc(~"50% - 15px");
-          /* Default to 50% width minus half the gap */
-          aspect-ratio: 3 / 2;
-          overflow: hidden;
-          position: relative;
-
-          img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            top: 0;
-            left: 0;
-          }
-
-          /* First image and every 5th image thereafter */
-          &:first-child,
-          &:nth-child(5n+1) {
-            flex-basis: 100%;
-          }
-
-          /* Handle last image if it's alone */
-          &:last-child {
-            flex-basis: 100%;
-          }
+  .sqs-gallery-container {
+    margin-top: 100px;
+  
+    .sqs-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+  
+      .image-wrapper {
+        flex: 1 0 ~"calc(50% - 15px)";
+        max-width: ~"calc(50% - 15px)";
+        aspect-ratio: 3 / 2;
+        overflow: hidden;
+        position: relative;
+  
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+  
+        /* First image and every 5th image thereafter */
+        &:first-child,
+        &:nth-child(5n+1) {
+          flex-basis: 100%;
+          max-width: 100%;
+        }
+  
+        /* Handle last image */
+        &:last-child {
+          flex-grow: 0;
+        }
+  
+        /* Make 4th image full-width when it's the last */
+        &:nth-child(4):last-child {
+          flex-basis: 100%;
+          max-width: 100%;
         }
       }
     }
   }
+}
 }
 
 // RELATED PROJECTS
