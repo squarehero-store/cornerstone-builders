@@ -1,51 +1,34 @@
 // SquareHero: Combined Portfolio Functionality Script
-(function() {
+(function () {
     // Portfolio Banner Function
     function insertPortfolioBanner() {
         const ogImage = document.querySelector('meta[property="og:image"]');
         const imageUrl = ogImage ? ogImage.content.replace('http:', 'https:') : '';
-        
+
         if (imageUrl) {
             const bannerDiv = document.createElement('div');
             bannerDiv.className = 'portfolio-banner';
-            
+
             const wrapperDiv = document.createElement('div');
             wrapperDiv.className = 'portfolio-banner-wrapper';
             bannerDiv.appendChild(wrapperDiv);
-            
+
             const imageContainer = document.createElement('div');
             imageContainer.className = 'portfolio-banner-image';
-            
+
             const imgElement = document.createElement('img');
             imgElement.src = imageUrl;
             imgElement.alt = 'Portfolio Banner';
             imageContainer.appendChild(imgElement);
             wrapperDiv.appendChild(imageContainer);
-            
+
             const header = document.getElementById('header');
             if (header) {
                 header.insertAdjacentElement('afterend', bannerDiv);
             } else {
                 document.body.insertAdjacentElement('afterbegin', bannerDiv);
             }
-            
-            const firstSection = document.querySelector('article section:first-of-type');
-            if (firstSection) {
-                firstSection.style.paddingTop = '0px';
-            }
-            
-            function setBannerPadding() {
-                const header = document.getElementById('header');
-                if (header && bannerDiv) {
-                    const headerHeight = header.offsetHeight;
-                    bannerDiv.style.paddingTop = `${headerHeight}px`;
-                }
-            }
-            
-            setTimeout(setBannerPadding, 100);
-            
-            window.addEventListener('resize', setBannerPadding);
-            
+
             document.body.classList.add('has-portfolio-banner');
         } else {
             console.error('Could not find og:image meta tag for portfolio banner');
@@ -56,7 +39,7 @@
     function moveContentWrapper() {
         const topWrapper = document.querySelector('.blog-item-top-wrapper');
         const contentWrapper = document.querySelector('.blog-item-content-wrapper');
-        
+
         if (topWrapper && contentWrapper) {
             topWrapper.appendChild(contentWrapper);
         }
@@ -83,7 +66,7 @@
                 console.log('Current Page Data:', currentPageData);
                 const currentCategory = currentPageData.item.categories[0];
                 console.log('Current Category:', currentCategory);
-                
+
                 return fetch(allProjectsUrl)
                     .then(response => response.json())
                     .then(allProjectsData => {

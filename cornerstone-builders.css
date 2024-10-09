@@ -987,15 +987,23 @@ body:not(.sqs-edit-mode-active) .sh-cta-form {
   width: 100%;
 }
 .portfolio-page.view-item .portfolio-banner {
+  position: relative;
   overflow: hidden;
   height: 70vh;
+  width: 100%;
 }
-@media only screen and (max-width: 750px) {
-  .portfolio-page.view-item .portfolio-banner {
-    height: 40vh;
-  }
+.portfolio-page.view-item .portfolio-banner-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
-.portfolio-page.view-item .portfolio-banner img {
+.portfolio-page.view-item .portfolio-banner-image {
+  width: 100%;
+  height: 100%;
+}
+.portfolio-page.view-item .portfolio-banner-image img {
   animation: zoomInOut 20s ease-in-out infinite;
   width: 100%;
   height: 100%;
@@ -1005,51 +1013,42 @@ body:not(.sqs-edit-mode-active) .sh-cta-form {
 .portfolio-page.view-item .blog-item-comments {
   display: none;
 }
-.portfolio-page.view-item article.entry .sqs-gallery-container {
-  margin-top: 100px;
-}
 @media only screen and (max-width: 750px) {
-  .portfolio-page.view-item article.entry .sqs-gallery-container {
+  .portfolio-page.view-item article.entry {
     margin-top: 0;
   }
 }
-.portfolio-page.view-item article.entry .sqs-gallery-container .sqs-gallery-design-grid {
-  display: grid;
-  box-sizing: border-box;
-  overflow: hidden;
+.portfolio-page.view-item article.entry .sqs-gallery-block-stacked {
+  margin-top: 100px;
+}
+.portfolio-page.view-item article.entry .sqs-gallery-block-stacked .sqs-gallery {
+  display: flex;
+  flex-wrap: wrap;
   gap: 30px;
-  grid-template-columns: repeat(2, 1fr);
 }
-.portfolio-page.view-item article.entry .sqs-gallery-container .sqs-gallery-design-grid .slide {
-  float: unset !important;
+.portfolio-page.view-item article.entry .sqs-gallery-block-stacked .sqs-gallery .image-wrapper {
+  flex: 0 0 calc(50% - 15px);
+  /* Default to 50% width minus half the gap */
+  aspect-ratio: 1.5;
   overflow: hidden;
-  width: 100% !important;
-  box-sizing: border-box;
-  clear: none !important;
-  grid-column: span 1;
-  /*First image*/
+  position: relative;
+  /* First image and every 5th image thereafter */
+  /* Handle last image if it's alone */
 }
-@media only screen and (max-width: 750px) {
-  .portfolio-page.view-item article.entry .sqs-gallery-container .sqs-gallery-design-grid .slide {
-    grid-column: span 2;
-  }
+.portfolio-page.view-item article.entry .sqs-gallery-block-stacked .sqs-gallery .image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
-.portfolio-page.view-item article.entry .sqs-gallery-container .sqs-gallery-design-grid .slide .image-slider-anchor {
-  padding-bottom: 50% !important;
+.portfolio-page.view-item article.entry .sqs-gallery-block-stacked .sqs-gallery .image-wrapper:first-child,
+.portfolio-page.view-item article.entry .sqs-gallery-block-stacked .sqs-gallery .image-wrapper:nth-child(5n+1) {
+  flex-basis: 100%;
 }
-.portfolio-page.view-item article.entry .sqs-gallery-container .sqs-gallery-design-grid .slide .margin-wrapper {
-  margin: 0 !important;
-}
-.portfolio-page.view-item article.entry .sqs-gallery-container .sqs-gallery-design-grid .slide .margin-wrapper .image-slide-anchor {
-  padding-bottom: 66%;
-}
-@media only screen and (min-width: 751px) {
-  .portfolio-page.view-item article.entry .sqs-gallery-container .sqs-gallery-design-grid .slide:nth-of-type(3n-2) {
-    grid-column: span 2;
-  }
-}
-.portfolio-page.view-item article.entry .sqs-gallery-container .sqs-gallery-design-grid .slide:nth-of-type(3n-2) .image-slide-anchor {
-  padding-bottom: 50%;
+.portfolio-page.view-item article.entry .sqs-gallery-block-stacked .sqs-gallery .image-wrapper:last-child {
+  flex-basis: 100%;
 }
 .sh-related-projects {
   box-sizing: border-box;
@@ -1252,13 +1251,13 @@ body:not(.sqs-edit-mode-active) .sh-cta-form {
   padding: var(--tertiary-button-padding-y) var(--tertiary-button-padding-x) !important;
   font-weight: 600;
   display: inline-block;
-  background: none!important;
+  background: none !important;
   border: 2px solid #011e45 !important;
   color: #011e45 !important;
 }
 .blog-page.view-list .blog-item .blog-basic-grid--text .blog-more-link:hover {
   background: #011e45 !important;
-  color: white!important;
+  color: white !important;
 }
 .blog-page.view-list .blog-item .blog-basic-grid--text .blog-more-link:after {
   display: none;

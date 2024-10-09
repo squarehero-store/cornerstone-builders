@@ -1382,6 +1382,9 @@ body:not(.sqs-edit-mode-active) {
 
 //// ITEM PAGE ////
 .portfolio-page.view-item {
+  .header {
+    position:relative;
+  }
   .content-collection {
     padding-top: 0 !important;
 
@@ -1417,19 +1420,30 @@ body:not(.sqs-edit-mode-active) {
 
   // HERO BANNER
   .portfolio-banner {
+    position: relative;
     overflow: hidden;
     height: 70vh;
+    width: 100%;
 
-    @media @mobile {
-      height: 40vh;
-    }
-
-    img {
-      animation: zoomInOut 20s ease-in-out infinite;
+    &-wrapper {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
-      object-position: center;
-      object-fit: cover;
+    }
+
+    &-image {
+      width: 100%;
+      height: 100%;
+
+      img {
+        animation: zoomInOut 20s ease-in-out infinite;
+        width: 100%;
+        height: 100%;
+        object-position: center;
+        object-fit: cover;
+      }
     }
   }
 
@@ -1439,53 +1453,43 @@ body:not(.sqs-edit-mode-active) {
 
   // GALLERY
   article.entry {
-    .sqs-gallery-container {
+    @media @mobile {
+      margin-top: 0;
+    }
+
+    .sqs-gallery-block-stacked {
       margin-top: 100px;
 
-      @media @mobile {
-        margin-top: 0;
-      }
-
-      .sqs-gallery-design-grid {
-        display: grid;
-        box-sizing: border-box;
-        overflow: hidden;
+      .sqs-gallery {
+        display: flex;
+        flex-wrap: wrap;
         gap: 30px;
-        grid-template-columns: ~"repeat(2, 1fr)";
 
-        .slide {
-          float: unset !important;
+        .image-wrapper {
+          flex: 0 0 calc(~"50% - 15px");
+          /* Default to 50% width minus half the gap */
+          aspect-ratio: 3 / 2;
           overflow: hidden;
-          width: 100% !important;
-          box-sizing: border-box;
-          clear: none !important;
-          grid-column: span 1;
+          position: relative;
 
-          @media @mobile {
-            grid-column: span 2;
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
           }
 
-          .image-slider-anchor {
-            padding-bottom: 50% !important;
+          /* First image and every 5th image thereafter */
+          &:first-child,
+          &:nth-child(5n+1) {
+            flex-basis: 100%;
           }
 
-          .margin-wrapper {
-            margin: 0 !important;
-
-            .image-slide-anchor {
-              padding-bottom: 66%;
-            }
-          }
-
-          /*First image*/
-          &:nth-of-type(3n-2) {
-            @media @tablet-desktop {
-              grid-column: span 2;
-            }
-
-            .image-slide-anchor {
-              padding-bottom: 50%;
-            }
+          /* Handle last image if it's alone */
+          &:last-child {
+            flex-basis: 100%;
           }
         }
       }
@@ -1657,36 +1661,42 @@ body:not(.sqs-edit-mode-active) {
 
   .blog-item {
     box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.15);
-  .blog-article-spacer {
-    display:none;
-  }
-  /*Content*/
-  .blog-basic-grid--text {
-    padding:30px;
-    box-sizing:border-box;
-    /*Title*/
-    h1 {
-font-size: 1.4rem;
-font-weight: 600;
-line-height: normal;
+
+    .blog-article-spacer {
+      display: none;
     }
-    /*Button*/
-    .blog-more-link {
-      padding:var(--tertiary-button-padding-y) var(--tertiary-button-padding-x)!important;
-      font-weight:600;
-      display:inline-block;
-      background:none!important;
-      border:2px solid @darkblue!important;
-      color:@darkblue!important;
-      &:hover {
-        background:@darkblue!important;
-        color:white!important;
+
+    /*Content*/
+    .blog-basic-grid--text {
+      padding: 30px;
+      box-sizing: border-box;
+
+      /*Title*/
+      h1 {
+        font-size: 1.4rem;
+        font-weight: 600;
+        line-height: normal;
       }
-      &:after {
-        display:none;
+
+      /*Button*/
+      .blog-more-link {
+        padding: var(--tertiary-button-padding-y) var(--tertiary-button-padding-x) !important;
+        font-weight: 600;
+        display: inline-block;
+        background: none !important;
+        border: 2px solid @darkblue  !important;
+        color: @darkblue  !important;
+
+        &:hover {
+          background: @darkblue  !important;
+          color: white !important;
+        }
+
+        &:after {
+          display: none;
+        }
       }
     }
-  }
   }
 }
 
