@@ -962,6 +962,9 @@ body:not(.sqs-edit-mode-active) .sh-cta-form {
 .portfolio-page.view-list .content-collection {
   display: none;
 }
+.portfolio-page.view-item .header {
+  position: relative;
+}
 .portfolio-page.view-item .content-collection {
   padding-top: 0 !important;
 }
