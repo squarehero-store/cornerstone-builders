@@ -1655,9 +1655,38 @@ body:not(.sqs-edit-mode-active) {
     }
   }
 
-  /*Buttons*/
-  .blog-more-link {
-    padding-left: 0 !important;
+  .blog-item {
+    box-shadow: 0px 0px 24px 0px rgba(0, 0, 0, 0.15);
+  .blog-article-spacer {
+    display:none;
+  }
+  /*Content*/
+  .blog-basic-grid--text {
+    padding:30px;
+    box-sizing:border-box;
+    /*Title*/
+    h1 {
+font-size: 1.4rem;
+font-weight: 600;
+line-height: normal;
+    }
+    /*Button*/
+    .blog-more-link {
+      padding:var(--tertiary-button-padding-y) var(--tertiary-button-padding-x)!important;
+      font-weight:600;
+      display:inline-block;
+      background:none!important;
+      border:2px solid @darkblue!important;
+      color:@darkblue!important;
+      &:hover {
+        background:@darkblue!important;
+        color:white!important;
+      }
+      &:after {
+        display:none;
+      }
+    }
+  }
   }
 }
 
