@@ -119,7 +119,7 @@
         return metaTag && metaTag.getAttribute('enabled') === 'true';
     }
 
-    // License checking functionality
+    // Modified license checking functionality
     function checkLicense() {
         const currentUrl = window.location.href;
         const jsonUrl = currentUrl + (currentUrl.includes('?') ? '&' : '?') + 'format=json';
@@ -129,16 +129,9 @@
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                return response.text();
+                return response.json(); // Use response.json() instead of response.text()
             })
-            .then(text => {
-                let data;
-                try {
-                    data = JSON.parse(text);
-                } catch (error) {
-                    throw error;
-                }
-
+            .then(data => {
                 const websiteId = data.website && data.website.id;
                 
                 if (!websiteId) {
@@ -216,18 +209,18 @@
         });
     }
 
-    // Main setup function
+    // Modified main setup function
     function setup() {
         updateFooterCopyright();
         updateSectionClasses();
-        setupFormFunctionality();
+        setupFormFunctionality(); // Always set up form functionality
         
         if (isCustomHeaderEnabled()) {
             setupHeaderFunctionality();
             setupDarkModeHeader();
         }
         
-        checkLicense();
+        checkLicense(); // License check is now independent of other functionality
         
         Promise.all([
             loadBackToTopPlugin(),
