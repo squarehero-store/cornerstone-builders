@@ -1,6 +1,6 @@
-// =================================================
-//   SquareHero Cornerstone Builders Template Files 
-// =================================================
+// ======================================================
+//   SquareHero.store Cornerstone Builders Template Files 
+// ======================================================
 (function() {
     // Function to get cache buster
     function getCacheBuster() {
@@ -70,23 +70,31 @@
         }
     }
 
-    // Form section functionality
+    // Updated form functionality
     function setupFormFunctionality() {
         const formButtons = document.querySelectorAll('a[href*="#form"]');
         formButtons.forEach(function(button) {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                const ctaForm = document.querySelector('footer .sh-cta-form');
-                if (ctaForm) {
-                    if (!ctaForm.classList.contains('active')) {
-                        ctaForm.classList.add('active');
-                        ctaForm.style.display = 'block';
-                        ctaForm.style.maxHeight = ctaForm.scrollHeight + 'px';
-                    }
-                    ctaForm.scrollIntoView({ behavior: 'smooth' });
-                }
-            });
+            // Remove any existing event listeners
+            button.removeEventListener('click', formButtonClickHandler);
+            // Add new event listener
+            button.addEventListener('click', formButtonClickHandler);
         });
+    }
+
+    // Separate function for the click event handler
+    function formButtonClickHandler(e) {
+        e.preventDefault();
+        const ctaForm = document.querySelector('footer .sh-cta-form');
+        if (ctaForm) {
+            if (!ctaForm.classList.contains('active')) {
+                ctaForm.classList.add('active');
+                ctaForm.style.display = 'block';
+                ctaForm.style.maxHeight = ctaForm.scrollHeight + 'px';
+            }
+            ctaForm.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            console.error('CTA form not found in the footer');
+        }
     }
 
     // Header functionality
@@ -129,7 +137,7 @@
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                return response.json(); // Use response.json() instead of response.text()
+                return response.json();
             })
             .then(data => {
                 const websiteId = data.website && data.website.id;
@@ -222,6 +230,17 @@
         
         checkLicense(); // License check is now independent of other functionality
         
+        // Add a mutation observer to handle dynamically added content
+        const observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+                if (mutation.type === 'childList') {
+                    setupFormFunctionality();
+                }
+            });
+        });
+
+        observer.observe(document.body, { childList: true, subtree: true });
+
         Promise.all([
             loadBackToTopPlugin(),
             loadPortfolioOverlayPlugin(),
