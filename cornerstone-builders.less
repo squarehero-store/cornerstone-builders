@@ -393,6 +393,16 @@ body.primary-button-shape-oval,
   }
 }
 
+  /*Post submitsson*/
+  .form-submission-text {
+    strong {
+      font-size: 1.375rem !important;
+      font-weight: 600;
+      line-height: 115%;
+      color:@orange;
+    }
+  }
+
 
 /////////////////////////////////////// HEADER
 ///////////////////////////////////////
@@ -676,7 +686,11 @@ body.primary-button-shape-oval,
 //// MAIN FOOTER ////
 #siteWrapper {
   .sh-footer {
-
+    h2 {
+      font-size: 1.375rem;
+        font-weight: 600;
+        line-height: 115%;
+    }
     // LINKS
     [data-block-type="2"] {
       .sqsrte-small {
@@ -773,6 +787,7 @@ body.primary-button-shape-oval,
         flex: 1;
       }
     }
+
 
     //// INSTAGRAM
     .instagram-block {
@@ -1651,7 +1666,7 @@ article.entry {
 
 ///////////////////////////////////// BLOG
 /////////////////////////////////////
-//// LISTING PAGE ////
+//// LIST PAGE ////
 .blog-page.view-list {
   .sh-blog-intro {
     .content-wrapper {
@@ -1664,6 +1679,11 @@ article.entry {
       padding-top: 0 !important;
       padding-bottom: 0 !important;
     }
+  }
+
+  .blog-basic-grid {
+    padding-top: 50px;
+    padding-bottom: 100px;
   }
 
   .blog-item {
@@ -1693,7 +1713,7 @@ article.entry {
         background: none !important;
         border: 2px solid @darkblue  !important;
         color: @darkblue  !important;
-
+        line-height: normal;
         &:hover {
           background: @darkblue  !important;
           color: white !important;
@@ -1793,6 +1813,159 @@ article.entry {
           margin: 60px 8vw;
         }
       }
+    }
+  }
+}
+
+///////////////////////////////////// FIND YOUR HOME
+/////////////////////////////////////
+
+//// PROPERTY ////
+.property-listings.view-item {
+
+  // BANNER
+  .blog-banner {
+    width: 100%;
+    height: 75vh;
+
+    @media @mobile {
+      height: 40vh;
+    }
+
+    overflow:hidden;
+
+    .blog-banner-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 50%;
+    }
+  }
+
+  .content-collection {
+    padding-top: 100px !important;
+  }
+
+  #page {
+    .content-wrapper {
+      padding: 0 !important;
+    }
+
+    .blog-item-inner-wrapper {
+      width: 100%;
+      display: flex;
+      margin-left: 0;
+      gap: 120px;
+
+      @media @mobile {
+        display: block;
+      }
+
+      // LEFT COL
+      .blog-item-top-wrapper {
+        flex: 0 0 25%;
+
+        @media @mobile {
+          flex: 0 0 100%;
+        }
+
+        text-align:left;
+
+        /*Property details*/
+        .blog-item-meta-wrapper {
+          display: none;
+        }
+
+        .listing-content {
+          .propertyStyles;
+          padding: 0;
+        }
+
+        .sh-button {
+          background: @orange;
+          margin-top: 20px;
+          text-align: center;
+          display: inline-block !important;
+          order: 4;
+        }
+
+        .item-excerpt {
+          p {
+            margin-bottom: 0;
+          }
+
+          order:3;
+
+          a {
+            display: block !important;
+            text-align: center;
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: normal;
+            border: solid 2px @darkblue;
+            padding: var(--tertiary-button-padding-y) var(--tertiary-button-padding-x) !important;
+            font-size: var(--tertiary-button-font-font-size-value) !important;
+            color: @darkblue;
+          }
+        }
+      }
+    }
+
+    // RIGHT COL
+    .entry {
+      padding-top: 0 !important;
+
+      .blog-meta-item {
+        display: none;
+      }
+    }
+
+    //// GALLERY
+    .gallery-section {
+      padding: 0 8vw 100px 8vw;
+
+      .sqs-gallery-block-stacked {
+        .sqs-gallery {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 30px;
+
+          .image-wrapper {
+            flex: 0 0 calc(~"50% - 15px");
+            /* Default to 50% width minus half the gap */
+            aspect-ratio: 3 / 2;
+            overflow: hidden;
+            position: relative;
+
+            img {
+              width: 100%;
+              height: 100%;
+              object-fit: cover;
+              position: absolute;
+              top: 0;
+              left: 0;
+            }
+
+            /* First image and every 5th image thereafter */
+            &:first-child,
+            &:nth-child(5n+1) {
+              flex-basis: 100%;
+            }
+
+            /* Handle last image if it's alone */
+            &:last-child:nth-child(5n+2) {
+              flex-basis: 100%;
+            }
+          }
+        }
+      }
+    }
+
+    //// RELATED PROPERITES
+    .related-properties-section {
+      background: @lightgrey;
+      padding: 100px 8vw;
+      box-sizing: border-box;
     }
   }
 }

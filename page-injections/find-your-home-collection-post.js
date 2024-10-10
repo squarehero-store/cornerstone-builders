@@ -70,29 +70,6 @@
     }
   }
 
-  // Current Property Details Script
-  function setupCurrentPropertyDetails() {
-    const metaTag = document.querySelector('meta[squarehero-plugin="property-listings"]');
-    if (!metaTag || metaTag.getAttribute('enabled') !== 'true') return;
-
-    const sheetUrl = metaTag.getAttribute('sheet-url');
-    const currentPropertyJsonUrl = `${window.location.pathname}?format=json`;
-
-    Promise.all([
-      fetch(sheetUrl).then(response => response.text()),
-      fetch(currentPropertyJsonUrl).then(response => response.json())
-    ]).then(([csvData, currentPropertyData]) => {
-      const sheetData = parseCSV(csvData);
-      const currentUrlId = currentPropertyData.item.urlId;
-      const propertyData = processPropertyData(sheetData, [currentPropertyData.item]);
-      const currentProperty = propertyData[0];
-
-      if (currentProperty) {
-        insertCurrentPropertyDetails(currentProperty);
-      }
-    }).catch(error => console.error('Error fetching property data:', error));
-  }
-
   // Helper functions for Property Data
   function parseCSV(csv) {
     const lines = csv.split('\n');
@@ -122,7 +99,6 @@
   }
 
   function processPropertyData(sheetData, blogItems) {
-    // Convert sheet URLs to regex patterns
     const urlMap = new Map(sheetData.map(row => {
       const url = row.Url.replace(/^\//, '').trim().toLowerCase();
       const regexPattern = new RegExp('^' + url.replace(/\*/g, '.*') + '$');
@@ -132,7 +108,6 @@
     return blogItems.map(item => {
       const urlId = item.urlId.toLowerCase();
       
-      // Find matching sheet row using regex
       const sheetRow = Array.from(urlMap.entries()).find(([regexPattern, value]) => regexPattern.test(urlId));
 
       if (!sheetRow) {
@@ -154,6 +129,34 @@
         urlId: item.urlId
       };
     });
+  }
+
+  function formatPrice(price) {
+    if (price === null) return 'Price TBA';
+    return '$' + price.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0});
+  }
+
+  // Current Property Details Script
+  function setupCurrentPropertyDetails() {
+    const metaTag = document.querySelector('meta[squarehero-plugin="property-listings"]');
+    if (!metaTag || metaTag.getAttribute('enabled') !== 'true') return;
+
+    const sheetUrl = metaTag.getAttribute('sheet-url');
+    const currentPropertyJsonUrl = `${window.location.pathname}?format=json`;
+
+    Promise.all([
+      fetch(sheetUrl).then(response => response.text()),
+      fetch(currentPropertyJsonUrl).then(response => response.json())
+    ]).then(([csvData, currentPropertyData]) => {
+      const sheetData = parseCSV(csvData);
+      const currentUrlId = currentPropertyData.item.urlId;
+      const propertyData = processPropertyData(sheetData, [currentPropertyData.item]);
+      const currentProperty = propertyData[0];
+
+      if (currentProperty) {
+        insertCurrentPropertyDetails(currentProperty);
+      }
+    }).catch(error => console.error('Error fetching property data:', error));
   }
 
   function insertCurrentPropertyDetails(property) {
@@ -181,11 +184,6 @@
 
     detailsContainer.innerHTML = detailsContent;
     entryTitle.insertAdjacentElement('afterend', detailsContainer);
-  }
-
-  function formatPrice(price) {
-    if (price === null) return 'Price TBA';
-    return '$' + price.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0});
   }
 
   // Function to add 'Enquire Now' button, move tertiary buttons, and add excerpt
@@ -238,6 +236,89 @@
     }
   }
 
+  // Related Properties Script
+  function setupRelatedProperties() {
+    const metaTag = document.querySelector('meta[squarehero-plugin="property-listings"]');
+    if (!metaTag || metaTag.getAttribute('enabled') !== 'true') return;
+
+    const sheetUrl = metaTag.getAttribute('sheet-url');
+    const target = metaTag.getAttribute('target');
+    const allPropertiesJsonUrl = `/${target}?format=json&nocache=${new Date().getTime()}`;
+    const currentPropertyJsonUrl = `${window.location.pathname}?format=json`;
+
+    fetch(currentPropertyJsonUrl)
+      .then(response => response.json())
+      .then(currentPropertyData => {
+        const currentUrlId = currentPropertyData.item.urlId;
+
+        Promise.all([
+          fetch(sheetUrl).then(response => response.text()),
+          fetch(allPropertiesJsonUrl).then(response => response.json())
+        ]).then(([csvData, allPropertiesData]) => {
+          const sheetData = parseCSV(csvData);
+          const propertyData = processPropertyData(sheetData, allPropertiesData.items);
+
+          const relatedProperties = propertyData
+            .filter(property => property.urlId !== currentUrlId)
+            .slice(0, 3);
+
+          renderRelatedProperties(relatedProperties);
+        }).catch(error => console.error('Error fetching data:', error));
+      })
+      .catch(error => console.error('Error fetching current property data:', error));
+  }
+
+  function createPropertyCard(property) {
+    const card = document.createElement('a');
+    card.className = 'property-card';
+    card.href = property.url;
+
+    let cardContent = `
+      <div class="property-image">
+        <img src="${property.imageUrl}" alt="${property.title}">
+        ${property.category ? `<span class="property-category">${property.category}</span>` : ''}
+      </div>
+      <div class="listing-content">
+        <h3 class="property-title">${property.title}</h3>
+        ${property.location ? `<p class="property-location">${property.location}</p>` : ''}
+        <p class="property-price ${property.price === null ? 'no-price' : ''}">${formatPrice(property.price)}</p>
+        <div class="property-details">
+          ${property.area ? `<span class="details-icon"><img src="https://cdn.jsdelivr.net/gh/squarehero-store/property-listings@main/Icons/Icon-Set_Size.svg" alt="Area"> ${property.area.toLocaleString()} sq ft</span>` : ''}
+          ${property.bedrooms ? `<span class="details-icon"><img src="https://cdn.jsdelivr.net/gh/squarehero-store/property-listings@main/Icons/Icon-Set_Bedroom.svg" alt="Bedrooms"> ${property.bedrooms}</span>` : ''}
+          ${property.bathrooms ? `<span class="details-icon"><img src="https://cdn.jsdelivr.net/gh/squarehero-store/property-listings@main/Icons/Icon-Set_Bathroom.svg" alt="Bathrooms"> ${property.bathrooms}</span>` : ''}
+          ${property.garage ? `<span class="details-icon"><img src="https://cdn.jsdelivr.net/gh/squarehero-store/property-listings@main/Icons/Icon-Set_Garage.svg" alt="Garage"> ${property.garage}</span>` : ''}
+        </div>
+        <div class="sh-button">View Home</div>
+      </div>
+    `;
+
+    card.innerHTML = cardContent;
+    return card;
+  }
+
+  function renderRelatedProperties(properties) {
+    const blogItemWrapper = document.querySelector('.blog-item-wrapper');
+    if (!blogItemWrapper) {
+      console.error('Blog item wrapper not found');
+      return;
+    }
+
+    const relatedSection = document.createElement('div');
+    relatedSection.className = 'related-properties-section';
+    relatedSection.innerHTML = '<h2>More Properties</h2>';
+
+    const relatedContainer = document.createElement('div');
+    relatedContainer.className = 'property-grid';
+
+    properties.forEach(property => {
+      const card = createPropertyCard(property);
+      relatedContainer.appendChild(card);
+    });
+
+    relatedSection.appendChild(relatedContainer);
+    blogItemWrapper.appendChild(relatedSection);
+  }
+
   // New initialization function
   function init() {
     centerTallImages();
@@ -245,9 +326,10 @@
     setupBannerImage();
     setupCurrentPropertyDetails();
     addButtonsAndExcerpt();
+    setupRelatedProperties();
   }
 
-  // Function to check if DOM is already loaded
+    // Function to check if DOM is already loaded
   function domReady(fn) {
     if (document.readyState === "complete" || document.readyState === "interactive") {
       setTimeout(fn, 1);
