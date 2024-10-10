@@ -468,7 +468,6 @@ body.primary-button-shape-oval,
 
       .header-title-nav-wrapper {
         margin-left: 0;
-
         // LOOGO
         .header-title {
           text-align: left;
@@ -496,6 +495,8 @@ body.primary-button-shape-oval,
         }
       }
 
+      
+
       // CONTACT BUTTON
       .header-actions--right {
         flex: 1 0 30%;
@@ -512,6 +513,11 @@ body.primary-button-shape-oval,
   //// MOBILE
   // HEADER
   .header-display-mobile {
+    .header-title-nav-wrapper {
+    .header-title {
+      text-align: left;
+    }
+  }
     background: @white;
     padding: 6vw;
 
@@ -535,11 +541,6 @@ body.primary-button-shape-oval,
 
   // HEADER DARK MODE
   .header--dark-mode {
-
-    /*Temp logo white*/
-    .header-title-logo {
-      filter: brightness(100);
-    }
 
     .header-display-desktop {
       background: @charcoal;
