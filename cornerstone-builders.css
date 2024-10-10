@@ -1155,8 +1155,8 @@ body:not(.sqs-edit-mode-active) .sh-cta-form {
   position: absolute;
   width: 2px;
   background: #011e45;
-  top: 40px !important;
   bottom: 0;
+  top: 0;
   height: 0;
   left: 50%;
   margin-left: -1px;
@@ -1164,6 +1164,8 @@ body:not(.sqs-edit-mode-active) .sh-cta-form {
 @media only screen and (max-width: 750px) {
   .timeline-page .user-items-list-section .timeline-container .timeline {
     left: 10vw !important;
+    top: 40px !important;
+    height: 100%!important;
   }
 }
 .timeline-page .user-items-list-section .timeline-container .timeline-item {
