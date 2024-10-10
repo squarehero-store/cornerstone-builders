@@ -409,7 +409,7 @@ body.primary-button-shape-oval,
 //// CUSTOM HEADER LAYOUT ////
 .cornerstone-header {
   #header {
-    overflow: hidden;
+    overflow: visible;
   }
 
   .header-announcement-bar-wrapper {
@@ -528,10 +528,11 @@ body.primary-button-shape-oval,
 
   // NAV MENU
   .header-menu-nav-item a {
-    @media @mobile {
       font-size: 1.7rem;
-    }
+      margin-top:30px;
+      margin-bottom:30px;
   }
+
 
   // HEADER DARK MODE
   .header--dark-mode {
@@ -586,21 +587,29 @@ body.primary-button-shape-oval,
 
 
   //Mobile menu appears//
-  .release-the-burger {
-    .header .header-burger {
-      display: flex;
-    }
-
-    .header-nav,
-    .header-actions {
-      display: none
-    }
-
-    &.header--menu-open .header-menu {
-      opacity: 1;
-      visibility: visible;
+.release-the-burger {
+  .header .header-burger {
+    display:flex;
+  } 
+.header-nav, .header-actions {
+  display:none
+  } 
+&.header--menu-open .header-menu { opacity: 1; 
+  visibility: visible;
+  }
+  .header-display-mobile {
+    display:flex;
+    justify-content: space-between;
+    .header-title-nav-wrapper {
+      display:block;
+      margin:0;
+      width:100%;
     }
   }
+  .header-display-desktop {
+    display:none;
+  }
+}
 
 
   // FOLDER ICONS
@@ -656,12 +665,20 @@ body.primary-button-shape-oval,
 
   // FOLDER
   .header-nav-folder-content {
-    background: @white  !important;
+    background: @darkblue  !important;
     padding: 30px !important;
     min-width: 150px !important;
     right: auto !important;
     left: -1em !important;
     text-align: left !important;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 24px 0px;
+  display:flex;
+  gap:10px;
+  flex-direction:column;
+  .header-nav-folder-item a {
+    color: @white!important;
+}
+
   }
 }
 
@@ -1437,7 +1454,7 @@ body:not(.sqs-edit-mode-active) {
   .portfolio-banner {
     position: relative;
     overflow: hidden;
-    height: 70vh;
+    height: 60vh;
     width: 100%;
 
     &-wrapper {
@@ -1741,7 +1758,7 @@ article.entry {
     .blog-banner-wrapper {
       position: relative;
       width: 100%;
-      height: 70vh;
+      height: 60vh;
 
       @media @mobile {
         height: auto;
@@ -1824,11 +1841,13 @@ article.entry {
 
 //// PROPERTY ////
 .property-listings.view-item {
-
+  .header {
+    position:relative!important;
+  }
   // BANNER
   .blog-banner {
     width: 100%;
-    height: 75vh;
+    height: 60vh;
 
     @media @mobile {
       height: 40vh;
@@ -1920,6 +1939,9 @@ article.entry {
 
       .blog-meta-item {
         display: none;
+      }
+      .blog-item-content {
+        margin-bottom:0;
       }
     }
 

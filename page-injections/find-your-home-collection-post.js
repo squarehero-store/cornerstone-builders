@@ -5,16 +5,16 @@
   // Function to center tall images
   function centerTallImages() {
     const images = document.querySelectorAll('.thumb-image');
-    
+
     images.forEach(img => {
       const parent = img.parentElement;
       const parentHeight = parent.offsetHeight;
       const imgHeight = img.naturalHeight;
       const imgWidth = img.naturalWidth;
       const aspectRatio = imgWidth / imgHeight;
-      
+
       const displayedHeight = img.offsetWidth / aspectRatio;
-      
+
       if (displayedHeight > parentHeight) {
         const topOffset = (displayedHeight - parentHeight) / 2;
         img.style.position = 'relative';
@@ -25,19 +25,19 @@
       }
     });
   }
-  
+
   // Function to move .gallery-block after article.entry and wrap it in a section
   function moveAndWrapGalleryBlock() {
     const galleryBlock = document.querySelector('.gallery-block');
     const articleEntry = document.querySelector('article.entry');
-    
+
     if (galleryBlock && articleEntry) {
       const gallerySection = document.createElement('section');
       gallerySection.className = 'gallery-section';
-      
+
       galleryBlock.parentNode.insertBefore(gallerySection, galleryBlock);
       gallerySection.appendChild(galleryBlock);
-      
+
       articleEntry.after(gallerySection);
     }
   }
@@ -47,25 +47,19 @@
     const ogImage = document.querySelector('meta[property="og:image"]');
     if (ogImage) {
       const imageUrl = ogImage.content.replace('http:', 'https:');
-      
+
       const banner = document.createElement('div');
       banner.className = 'blog-banner';
-      
+
       const img = document.createElement('img');
       img.className = 'blog-banner-image';
       img.src = imageUrl;
-      
+
       banner.appendChild(img);
-      
+
       const header = document.getElementById('header');
       if (header && header.nextSibling) {
         header.parentNode.insertBefore(banner, header.nextSibling);
-        
-        const headerInner = document.querySelector('.header-inner');
-        if (headerInner) {
-          const headerHeight = headerInner.offsetHeight;
-          banner.style.paddingTop = headerHeight + 'px';
-        }
       }
     }
   }
@@ -107,7 +101,7 @@
 
     return blogItems.map(item => {
       const urlId = item.urlId.toLowerCase();
-      
+
       const sheetRow = Array.from(urlMap.entries()).find(([regexPattern, value]) => regexPattern.test(urlId));
 
       if (!sheetRow) {
@@ -133,7 +127,7 @@
 
   function formatPrice(price) {
     if (price === null) return 'Price TBA';
-    return '$' + price.toLocaleString(undefined, {minimumFractionDigits: 0, maximumFractionDigits: 0});
+    return '$' + price.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 });
   }
 
   // Current Property Details Script
@@ -204,7 +198,7 @@
     enquireButton.href = '#form';
     enquireButton.className = 'sh-button';
     enquireButton.textContent = 'Enquire Now';
-    
+
     blogTitle.parentNode.insertBefore(enquireButton, blogTitle.nextSibling);
 
     const tertiaryButtons = article.querySelectorAll('[data-button-type="tertiary"]');
@@ -220,12 +214,12 @@
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const jsonData = await response.json();
-      
+
       if (jsonData && jsonData.item && jsonData.item.excerpt) {
         const excerptDiv = document.createElement('div');
         excerptDiv.className = 'item-excerpt';
         excerptDiv.innerHTML = jsonData.item.excerpt;
-        
+
         const lastButton = tertiaryButtons.length > 0 ? tertiaryButtons[tertiaryButtons.length - 1] : enquireButton;
         lastButton.parentNode.insertBefore(excerptDiv, lastButton.nextSibling);
       } else {
@@ -329,7 +323,7 @@
     setupRelatedProperties();
   }
 
-    // Function to check if DOM is already loaded
+  // Function to check if DOM is already loaded
   function domReady(fn) {
     if (document.readyState === "complete" || document.readyState === "interactive") {
       setTimeout(fn, 1);
@@ -346,7 +340,7 @@
 
   // Existing window resize listener
   let resizeTimer;
-  window.addEventListener('resize', function() {
+  window.addEventListener('resize', function () {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(centerTallImages, 250);
   });
