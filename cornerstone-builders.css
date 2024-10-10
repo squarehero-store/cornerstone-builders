@@ -222,7 +222,7 @@ body.primary-button-shape-oval .blog-more-link,
   }
 }
 .accordion-divider {
-  display: none;
+  display: none!important;
 }
 .field-list {
   display: flex;
@@ -1382,6 +1382,7 @@ body:not(.sqs-edit-mode-active) .sh-cta-form {
   height: 100%;
   object-fit: cover;
   object-position: 50% 50%;
+  animation: zoomInOut 20s ease-in-out infinite;
 }
 .property-listings.view-item .content-collection {
   padding-top: 100px !important;
