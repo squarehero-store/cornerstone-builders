@@ -70,8 +70,8 @@
                     height: `${timelineHeight}px`,
                     scrollTrigger: {
                         trigger: timelineContainer,
-                        start: 'top 5%',
-                        end: 'bottom top',
+                        start: 'top 50%',
+                        end: 'bottom 50%',
                         scrub: true
                     }
                 }
