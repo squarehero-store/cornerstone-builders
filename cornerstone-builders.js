@@ -99,21 +99,18 @@
 
     // Header functionality
     function setupHeaderFunctionality() {
-        const metaTag = document.querySelector('meta[squarehero-customization="header"]');
-        if (metaTag && metaTag.getAttribute('enabled') === 'true') {
-            const headerActionsRight = document.querySelector('.header-nav');
-            const headerTitle = document.querySelector('.header-display-desktop');
-            if (headerActionsRight && headerTitle) {
-                headerTitle.appendChild(headerActionsRight);
-            }
-            document.body.classList.add('cornerstone-header');
+        const headerActionsRight = document.querySelector('.header-nav');
+        const headerTitle = document.querySelector('.header-display-desktop');
+        if (headerActionsRight && headerTitle) {
+            headerTitle.appendChild(headerActionsRight);
         }
+        document.body.classList.add('cornerstone-header');
     }
 
     // Dark mode header functionality
     function setupDarkModeHeader() {
         const metaTag = document.querySelector('meta[squarehero-customization="header"]');
-        if (metaTag && metaTag.getAttribute('enabled') === 'true' && metaTag.getAttribute('darkmode') === 'true') {
+        if (metaTag && metaTag.getAttribute('darkmode') === 'true') {
             const header = document.querySelector('#header');
             if (header) {
                 header.classList.add('header--dark-mode');
@@ -121,13 +118,7 @@
         }
     }
 
-    // New function to check if custom header is enabled
-    function isCustomHeaderEnabled() {
-        const metaTag = document.querySelector('meta[squarehero-customization="header"]');
-        return metaTag && metaTag.getAttribute('enabled') === 'true';
-    }
-
-    // Modified license checking functionality
+    // License checking functionality
     function checkLicense() {
         const currentUrl = window.location.href;
         const jsonUrl = currentUrl + (currentUrl.includes('?') ? '&' : '?') + 'format=json';
@@ -217,18 +208,14 @@
         });
     }
 
-    // Modified main setup function
+    // Main setup function
     function setup() {
         updateFooterCopyright();
         updateSectionClasses();
-        setupFormFunctionality(); // Always set up form functionality
-        
-        if (isCustomHeaderEnabled()) {
-            setupHeaderFunctionality();
-            setupDarkModeHeader();
-        }
-        
-        checkLicense(); // License check is now independent of other functionality
+        setupFormFunctionality();
+        setupHeaderFunctionality();
+        setupDarkModeHeader();
+        checkLicense();
         
         // Add a mutation observer to handle dynamically added content
         const observer = new MutationObserver(function(mutations) {

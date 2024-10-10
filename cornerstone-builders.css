@@ -280,7 +280,7 @@ body.primary-button-shape-oval .blog-more-link,
   /*Active folder icon*/
 }
 .cornerstone-header #header {
-  overflow: hidden;
+  overflow: visible;
 }
 .cornerstone-header .header-announcement-bar-wrapper {
   padding: 0 !important;
@@ -360,10 +360,10 @@ body.primary-button-shape-oval .blog-more-link,
 .cornerstone-header .header-display-mobile .burger-inner .bottom-bun {
   background: #011e45 !important;
 }
-@media only screen and (max-width: 750px) {
-  .cornerstone-header .header-menu-nav-item a {
-    font-size: 1.7rem;
-  }
+.cornerstone-header .header-menu-nav-item a {
+  font-size: 1.7rem;
+  margin-top: 30px;
+  margin-bottom: 30px;
 }
 .cornerstone-header .header--dark-mode {
   /*Temp logo white*/
@@ -408,6 +408,18 @@ body.primary-button-shape-oval .blog-more-link,
   opacity: 1;
   visibility: visible;
 }
+.cornerstone-header .release-the-burger .header-display-mobile {
+  display: flex;
+  justify-content: space-between;
+}
+.cornerstone-header .release-the-burger .header-display-mobile .header-title-nav-wrapper {
+  display: block;
+  margin: 0;
+  width: 100%;
+}
+.cornerstone-header .release-the-burger .header-display-desktop {
+  display: none;
+}
 .cornerstone-header .header-nav-item--folder .header-nav-folder-title .folder-title-arrow-container {
   display: inline-block;
   margin-left: 5px;
@@ -433,12 +445,19 @@ body.primary-button-shape-oval .blog-more-link,
   fill: hsla(var(--accent-hsl), 1);
 }
 .cornerstone-header .header-nav-folder-content {
-  background: hsla(var(--white-hsl), 1) !important;
+  background: #011e45 !important;
   padding: 30px !important;
   min-width: 150px !important;
   right: auto !important;
   left: -1em !important;
   text-align: left !important;
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 24px 0px;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+.cornerstone-header .header-nav-folder-content .header-nav-folder-item a {
+  color: hsla(var(--white-hsl), 1) !important;
 }
 #cart .cart-title {
   font-size: 2rem;
@@ -1298,7 +1317,7 @@ body:not(.sqs-edit-mode-active) .sh-cta-form {
 .blog-page.view-item .blog-banner .blog-banner-wrapper {
   position: relative;
   width: 100%;
-  height: 70vh;
+  height: 60vh;
 }
 @media only screen and (max-width: 750px) {
   .blog-page.view-item .blog-banner .blog-banner-wrapper {
