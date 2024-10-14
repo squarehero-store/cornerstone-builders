@@ -379,7 +379,7 @@ body.primary-button-shape-oval .blog-more-link,
   background: hsla(var(--white-hsl), 1) !important;
 }
 .header--dark-mode .header-nav-wrapper {
-  background: white;
+  background: hsla(var(--white-hsl), 1);
 }
 .header--dark-mode .header-nav-wrapper .header-nav-item--active {
   background: hsla(var(--darkAccent-hsl), 1) !important;
@@ -388,7 +388,7 @@ body.primary-button-shape-oval .blog-more-link,
   color: hsla(var(--darkAccent-hsl), 1) !important;
 }
 .header--dark-mode .header-nav-wrapper .header-nav-item--active a {
-  color: white !important;
+  color: hsla(var(--white-hsl), 1) !important;
 }
 .release-the-burger .header .header-burger {
   display: flex;
@@ -606,7 +606,7 @@ body:not(.sqs-edit-mode-active) .sh-cta-form {
 /*Turn link into button because button block drops outside the text background :(*/
 .sh-cta p a {
   background: hsla(var(--accent-hsl), 1);
-  color: white !important;
+  color: hsla(var(--white-hsl), 1) !important;
   display: inline-block;
   font-weight: var(--primary-button-font-font-weight);
   text-decoration: none;
@@ -677,7 +677,7 @@ body:not(.sqs-edit-mode-active) .sh-cta-form {
 }
 .user-items-list .list-item .list-item-content .list-item-content__button:hover {
   background: hsla(var(--darkAccent-hsl), 1) !important;
-  color: white !important;
+  color: hsla(var(--white-hsl), 1) !important;
 }
 #sh-featured-portfolio {
   width: 100%;
@@ -847,7 +847,7 @@ body:not(.sqs-edit-mode-active) .sh-cta-form {
   bottom: 20px;
   left: 20px;
   right: 20px;
-  color: white;
+  color: hsla(var(--white-hsl), 1);
   margin: 0;
   z-index: 1;
   font-size: 1.4rem;
@@ -909,7 +909,7 @@ body:not(.sqs-edit-mode-active) .sh-cta-form {
 .portfolio-page.view-list .header-wrapper .filter-item select {
   width: 100%;
   padding: 18px 12px;
-  background: white;
+  background: hsla(var(--white-hsl), 1);
   border: none;
   font-size: 1rem;
   font-weight: 400;
@@ -964,7 +964,7 @@ body:not(.sqs-edit-mode-active) .sh-cta-form {
   bottom: 20px;
   left: 20px;
   right: 20px;
-  color: white;
+  color: hsla(var(--white-hsl), 1);
   margin: 0;
   z-index: 1;
   font-size: 1.4rem;
@@ -1127,7 +1127,7 @@ body:not(.sqs-edit-mode-active) .sh-cta-form {
   bottom: 20px;
   left: 20px;
   right: 20px;
-  color: white;
+  color: hsla(var(--white-hsl), 1);
   margin: 0;
   z-index: 1;
   font-size: 1.4rem;
@@ -1299,7 +1299,7 @@ body:not(.sqs-edit-mode-active) .sh-cta-form {
 }
 .blog-page.view-list .blog-item .blog-basic-grid--text .blog-more-link:hover {
   background: hsla(var(--darkAccent-hsl), 1) !important;
-  color: white !important;
+  color: hsla(var(--white-hsl), 1) !important;
 }
 .blog-page.view-list .blog-item .blog-basic-grid--text .blog-more-link:after {
   display: none;
