@@ -762,13 +762,6 @@ body:not(.sqs-edit-mode-active) .sh-cta-form {
 .sh-testimonials .content-wrapper {
   padding-top: 0 !important;
 }
-.sh-testimonials .fluid-image-container.sqs-image-content {
-  height: auto !important;
-  aspect-ratio: 1.33333333;
-}
-.sh-testimonials .sqs-image {
-  align-items: flex-start !important;
-}
 .sh-testimonials h2 {
   margin-bottom: 50px !important;
 }
