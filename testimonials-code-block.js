@@ -10,7 +10,7 @@
         if (customizationMetaTag && customizationMetaTag.getAttribute('enabled') === 'true' && container && featureMetaTag) {
             const target = customizationMetaTag.getAttribute('target');
             const category = featureMetaTag.getAttribute('category') || '';
-            const itemCount = Math.min(parseInt(featureMetaTag.getAttribute('item-count') || '3', 10), 6);
+            const itemCount = parseInt(featureMetaTag.getAttribute('item-count')) || Infinity;
             const cacheBuster = new Date().getTime();
             const jsonUrl = `/${target}?format=json&_=${cacheBuster}`;
 
