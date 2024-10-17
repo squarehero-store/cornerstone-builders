@@ -7,8 +7,7 @@
       
       if (enableMetaTag && enableMetaTag.getAttribute('enabled') === 'true' && targetDiv && featureMetaTag) {
         const target = enableMetaTag.getAttribute('target');
-        const filterString = featureMetaTag.getAttribute('filter') || '';
-        const filterCategories = filterString.split(',').map(category => category.trim()).filter(Boolean);
+        const categoryValue = featureMetaTag.getAttribute('category') || '';
         const itemCount = Math.min(parseInt(featureMetaTag.getAttribute('item-count') || '3', 10), 6);
         const cacheBuster = new Date().getTime();
         const jsonUrl = `/${target}?format=json&_=${cacheBuster}`;
@@ -18,12 +17,10 @@
           .then(data => {
             let posts = data.items;
             
-            // Apply filter if it exists
-            if (filterCategories.length > 0) {
+            // Filter by category if it exists
+            if (categoryValue) {
               posts = posts.filter(post => 
-                post.categories.some(category => 
-                  filterCategories.includes(category)
-                )
+                post.categories.includes(categoryValue)
               );
             }
             
