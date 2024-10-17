@@ -3,32 +3,48 @@
 // ======================================================
 (function() {
     function initTestimonials() {
-        const enableMetaTag = document.querySelector('meta[squarehero-customization="testimonials"]');
+        const customizationMetaTag = document.querySelector('meta[squarehero-customization="testimonials"]');
         const featureMetaTag = document.querySelector('meta[squarehero-feature="testimonials"]');
-        const targetDiv = document.getElementById('sh-testimonials');
-        
-        if (enableMetaTag && enableMetaTag.getAttribute('enabled') === 'true' && targetDiv && featureMetaTag) {
-            const target = enableMetaTag.getAttribute('target');
+        const container = document.getElementById('sh-testimonials');
+
+        if (customizationMetaTag && customizationMetaTag.getAttribute('enabled') === 'true' && container && featureMetaTag) {
+            const target = customizationMetaTag.getAttribute('target');
             const category = featureMetaTag.getAttribute('category') || '';
+            const itemCount = Math.min(parseInt(featureMetaTag.getAttribute('item-count') || '3', 10), 6);
             const cacheBuster = new Date().getTime();
             const jsonUrl = `/${target}?format=json&_=${cacheBuster}`;
-            
+
             fetch(jsonUrl)
-                .then(response => response.json())
-                .then(data => {
-                    let testimonials = data.items;
-                    
-                    // Filter by category if it exists
-                    if (category) {
-                        testimonials = testimonials.filter(item => 
-                            item.category === category
-                        );
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
                     }
-                    
-                    populateTestimonials(testimonials, targetDiv);
-                    createTestimonialSlider(targetDiv);
+                    return response.json();
                 })
-                .catch(error => console.error('Error fetching testimonials:', error));
+                .then(data => {
+                    if (!data || !data.items) {
+                        throw new Error('Data or items are undefined');
+                    }
+
+                    let testimonials = data.items
+                        .filter(item => !category || (item.categories && item.categories.includes(category)))
+                        .slice(0, itemCount)
+                        .map(item => ({
+                            title: item.title,
+                            body: stripHtml(item.body)
+                        }));
+
+                    if (testimonials.length > 0) {
+                        populateTestimonials(testimonials, container);
+                        createTestimonialSlider(container);
+                    } else {
+                        container.innerHTML = '<p>No testimonials available at this time.</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error in testimonials script:', error);
+                    container.innerHTML = '<p>Unable to load testimonials at this time.</p>';
+                });
         }
     }
 
@@ -39,25 +55,20 @@
     }
 
     function populateTestimonials(testimonials, container) {
-        container.innerHTML = ''; // Clear existing content
-        const sliderContainer = document.createElement('div');
-        sliderContainer.className = 'sh-testimonial-slider';
-        
+        container.innerHTML = '';
         testimonials.forEach((testimonial, index) => {
             const element = document.createElement('div');
-            element.className = 'sh-testimonial-item';
+            element.className = 'testimonial';
             element.innerHTML = `
-                <p class="sh-testimonial-body">"${stripHtml(testimonial.body).trim()}"</p>
-                <h3 class="sh-testimonial-title">– ${testimonial.title}</h3>
+                <p class="testimonial-body">"${testimonial.body.trim()}"</p>
+                <h3 class="testimonial-title">– ${testimonial.title}</h3>
             `;
-            sliderContainer.appendChild(element);
+            container.appendChild(element);
         });
-        
-        container.appendChild(sliderContainer);
     }
 
     function createTestimonialSlider(container) {
-        const testimonials = container.querySelectorAll('.sh-testimonial-item');
+        const testimonials = container.querySelectorAll('.testimonial');
         let currentIndex = 0;
         
         function showTestimonial(index) {
@@ -80,14 +91,13 @@
             showTestimonial(currentIndex);
         }
         
-        showTestimonial(currentIndex);
-        
-        window.addEventListener('resize', () => adjustContainerHeight(testimonials[currentIndex]));
-        
-        setInterval(nextTestimonial, 4000);
+        if (testimonials.length > 0) {
+            showTestimonial(currentIndex);
+            window.addEventListener('resize', () => adjustContainerHeight(testimonials[currentIndex]));
+            setInterval(nextTestimonial, 4000);
+        }
     }
 
-    // Run the script after DOM content is loaded
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', initTestimonials);
     } else {
