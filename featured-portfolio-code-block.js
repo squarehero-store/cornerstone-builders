@@ -1,66 +1,67 @@
 // Featured Portfolio Script
 (function() {
-  function initFeaturedPortfolio() {
-    const enableMetaTag = document.querySelector('meta[squarehero-customization="portfolio"]');
-    const filterMetaTag = document.querySelector('meta[squarehero-feature="portfolio"]');
-    const targetDiv = document.getElementById('sh-featured-portfolio');
-    
-    if (enableMetaTag && enableMetaTag.getAttribute('enabled') === 'true' && targetDiv) {
-      const target = enableMetaTag.getAttribute('target');
-      const filterString = filterMetaTag ? filterMetaTag.getAttribute('filter') : '';
-      const filterCategories = filterString.split(',').map(category => category.trim()).filter(Boolean);
-      const cacheBuster = new Date().getTime();
-      const jsonUrl = `/${target}?format=json&_=${cacheBuster}`;
+    function initFeaturedPortfolio() {
+      const enableMetaTag = document.querySelector('meta[squarehero-customization="portfolio"]');
+      const featureMetaTag = document.querySelector('meta[squarehero-feature="portfolio"]');
+      const targetDiv = document.getElementById('sh-featured-portfolio');
       
-      fetch(jsonUrl)
-        .then(response => response.json())
-        .then(data => {
-          let posts = data.items;
-          
-          // Apply filter if it exists
-          if (filterCategories.length > 0) {
-            posts = posts.filter(post => 
-              post.categories.some(category => 
-                filterCategories.includes(category)
-              )
-            );
-          }
-          
-          // Limit to 3 posts
-          posts = posts.slice(0, 3);
-          
-          const container = document.createElement('div');
-          container.className = 'sh-blog-post-grid';
-          
-          posts.forEach(post => {
-            const postElement = document.createElement('a');
-            postElement.href = post.fullUrl;
-            postElement.className = 'sh-blog-post-item preFade fadeIn';
+      if (enableMetaTag && enableMetaTag.getAttribute('enabled') === 'true' && targetDiv && featureMetaTag) {
+        const target = enableMetaTag.getAttribute('target');
+        const filterString = featureMetaTag.getAttribute('filter') || '';
+        const filterCategories = filterString.split(',').map(category => category.trim()).filter(Boolean);
+        const itemCount = Math.min(parseInt(featureMetaTag.getAttribute('item-count') || '3', 10), 6);
+        const cacheBuster = new Date().getTime();
+        const jsonUrl = `/${target}?format=json&_=${cacheBuster}`;
+        
+        fetch(jsonUrl)
+          .then(response => response.json())
+          .then(data => {
+            let posts = data.items;
             
-            const image = document.createElement('div');
-            image.className = 'sh-blog-post-image';
-            image.style.backgroundImage = `url('${post.assetUrl}')`;
+            // Apply filter if it exists
+            if (filterCategories.length > 0) {
+              posts = posts.filter(post => 
+                post.categories.some(category => 
+                  filterCategories.includes(category)
+                )
+              );
+            }
             
-            const title = document.createElement('h3');
-            title.className = 'sh-blog-post-title';
-            title.textContent = post.title;
+            // Limit to specified number of posts (up to 6)
+            posts = posts.slice(0, itemCount);
             
-            postElement.appendChild(image);
-            postElement.appendChild(title);
-            container.appendChild(postElement);
-          });
-          
-          targetDiv.innerHTML = '';
-          targetDiv.appendChild(container);
-        })
-        .catch(error => console.error('Error fetching portfolio items:', error));
+            const container = document.createElement('div');
+            container.className = 'sh-blog-post-grid';
+            
+            posts.forEach(post => {
+              const postElement = document.createElement('a');
+              postElement.href = post.fullUrl;
+              postElement.className = 'sh-blog-post-item preFade fadeIn';
+              
+              const image = document.createElement('div');
+              image.className = 'sh-blog-post-image';
+              image.style.backgroundImage = `url('${post.assetUrl}')`;
+              
+              const title = document.createElement('h3');
+              title.className = 'sh-blog-post-title';
+              title.textContent = post.title;
+              
+              postElement.appendChild(image);
+              postElement.appendChild(title);
+              container.appendChild(postElement);
+            });
+            
+            targetDiv.innerHTML = '';
+            targetDiv.appendChild(container);
+          })
+          .catch(error => console.error('Error fetching portfolio items:', error));
+      }
     }
-  }
-
-  // Run the script after DOM content is loaded
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initFeaturedPortfolio);
-  } else {
-    initFeaturedPortfolio();
-  }
-})();
+  
+    // Run the script after DOM content is loaded
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initFeaturedPortfolio);
+    } else {
+      initFeaturedPortfolio();
+    }
+  })();
