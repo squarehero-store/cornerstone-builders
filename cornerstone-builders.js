@@ -303,7 +303,7 @@
             loadPortfolioOverlayPlugin(),
             loadListBlockPlugin()
         ]).then(() => {
-            console.log('🚀 SquareHero.store Cornerstone Scripts loaded');
+            console.log("Cornerstone Builders by SquareHero.store / Learn more at %chttps://www.squarehero.store", "color: blue; text-decoration: underline; cursor: pointer;");
         }).catch(error => {
             console.error('Error loading SquareHero.store plugins:', error);
         });
