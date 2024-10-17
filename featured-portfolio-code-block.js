@@ -1,4 +1,6 @@
-// Featured Portfolio Script
+// ======================================================
+//         SquareHero.store Featured Portfolio 
+// ======================================================
 (function() {
     function initFeaturedPortfolio() {
       const enableMetaTag = document.querySelector('meta[squarehero-customization="portfolio"]');
