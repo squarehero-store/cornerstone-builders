@@ -3,8 +3,8 @@
 // ======================================================
 (function() {
     function initFeaturedPortfolio() {
-      const enableMetaTag = document.querySelector('meta[squarehero-customization="portfolio"]');
-      const featureMetaTag = document.querySelector('meta[squarehero-feature="portfolio"]');
+      const enableMetaTag = document.querySelector('meta[squarehero-feature="portfolio"]');
+      const featureMetaTag = document.querySelector('meta[squarehero-feature-settings="portfolio"]');
       const targetDiv = document.getElementById('sh-featured-portfolio');
       
       if (enableMetaTag && enableMetaTag.getAttribute('enabled') === 'true' && targetDiv && featureMetaTag) {
