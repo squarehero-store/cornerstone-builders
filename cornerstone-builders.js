@@ -109,7 +109,7 @@
 
     // Dark mode header functionality
     function setupDarkModeHeader() {
-        const metaTag = document.querySelector('meta[squarehero-customization="header"]');
+        const metaTag = document.querySelector('meta[squarehero-feature="header"]');
         if (metaTag && metaTag.getAttribute('darkmode') === 'true') {
             const header = document.querySelector('#header');
             if (header) {
