@@ -1,10 +1,10 @@
-// ======================================================
-//         SquareHero.store Testimonials Feature 
-// ======================================================
+// =========================================================
+//         SquareHero.store Testimonials Library Feature 
+// =========================================================
 (function() {
     function initTestimonials() {
-        const customizationMetaTag = document.querySelector('meta[squarehero-customization="testimonials"]');
-        const featureMetaTag = document.querySelector('meta[squarehero-feature="testimonials"]');
+        const customizationMetaTag = document.querySelector('meta[squarehero-feature="testimonials"]');
+        const featureMetaTag = document.querySelector('meta[squarehero-feature-settings="testimonials"]');
         const container = document.getElementById('sh-testimonials');
 
         if (customizationMetaTag && customizationMetaTag.getAttribute('enabled') === 'true' && container && featureMetaTag) {
