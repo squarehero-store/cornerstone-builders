@@ -1221,8 +1221,8 @@ body:not(.sqs-edit-mode-active) .sh-cta-form {
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #fff;
-  border: 2px solid #000;
+  background: hsla(var(--white-hsl), 1);
+  border: 2px solid hsla(var(--black-hsl), 1);
 }
 .timeline-page .user-items-list-section .timeline-container .timeline-item:nth-child(even) {
   left: 50%;
