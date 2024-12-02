@@ -132,7 +132,7 @@
 
   // Current Property Details Script
   function setupCurrentPropertyDetails() {
-    const metaTag = document.querySelector('meta[squarehero-plugin="property-listings"]');
+    const metaTag = document.querySelector('meta[squarehero-plugin="real-estate-listings"]');
     if (!metaTag || metaTag.getAttribute('enabled') !== 'true') return;
 
     const sheetUrl = metaTag.getAttribute('sheet-url');
@@ -232,7 +232,7 @@
 
   // Related Properties Script
   function setupRelatedProperties() {
-    const metaTag = document.querySelector('meta[squarehero-plugin="property-listings"]');
+    const metaTag = document.querySelector('meta[squarehero-plugin="real-estate-listings"]');
     if (!metaTag || metaTag.getAttribute('enabled') !== 'true') return;
 
     const sheetUrl = metaTag.getAttribute('sheet-url');
