@@ -933,6 +933,7 @@ body:not(.sqs-edit-mode-active) .sh-cta-form {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='17' viewBox='0 0 16 17' fill='none'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M0.792969 5.32486L2.20718 3.91064L8.00008 9.70354L13.793 3.91064L15.2072 5.32486L8.00008 12.532L0.792969 5.32486Z' fill='%231A1A1A'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 12px center;
+  color: hsla(var(--black-hsl), 1);
 }
 .portfolio-page.view-list .portfolio-grid {
   display: grid;
@@ -1302,6 +1303,7 @@ body:not(.sqs-edit-mode-active) .sh-cta-form {
   font-size: 1.4rem;
   font-weight: 600;
   line-height: normal;
+  color: hsla(var(--darkAccent-hsl), 1);
 }
 .blog-page.view-list .blog-item .blog-basic-grid--text .blog-more-link {
   padding: var(--tertiary-button-padding-y) var(--tertiary-button-padding-x) !important;
