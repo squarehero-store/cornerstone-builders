@@ -81,7 +81,7 @@
 
                 // Add event listener to filter select
                 filterSelect.addEventListener('change', function() {
-                    var mixer = this.value;
+                    var filterValue = this.value;
                     mixer.filter(filterValue);
                 });
             })
