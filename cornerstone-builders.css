@@ -84,11 +84,11 @@ p {
   align-items: center;
   justify-content: center;
   font-size: 0.9em;
+  gap: 5px;
 }
-.propertyStyles .property-details .details-icon img {
+.propertyStyles .property-details .details-icon svg {
   width: 20px;
   height: 20px;
-  margin-right: 5px;
 }
 .propertyStyles .sh-button {
   display: inline-block;
@@ -1485,11 +1485,11 @@ body:not(.sqs-edit-mode-active) .sh-cta-form {
   align-items: center;
   justify-content: center;
   font-size: 0.9em;
+  gap: 5px;
 }
-.property-listings.view-item #page .blog-item-inner-wrapper .blog-item-top-wrapper .listing-content .property-details .details-icon img {
+.property-listings.view-item #page .blog-item-inner-wrapper .blog-item-top-wrapper .listing-content .property-details .details-icon svg {
   width: 20px;
   height: 20px;
-  margin-right: 5px;
 }
 .property-listings.view-item #page .blog-item-inner-wrapper .blog-item-top-wrapper .listing-content .sh-button {
   display: inline-block;
