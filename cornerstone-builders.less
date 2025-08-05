@@ -411,6 +411,7 @@ body.primary-button-shape-oval,
 /////////////////////////////////////// HEADER
 ///////////////////////////////////////
 //// CUSTOM HEADER LAYOUT ////
+body.cornerstone-header {
   #header {
     overflow: visible;
   }
@@ -620,30 +621,30 @@ body.primary-button-shape-oval,
 
 
   //Mobile menu appears//
-.release-the-burger {
-  .header .header-burger {
-    display:flex;
-  } 
-.header-nav, .header-actions {
-  display:none
-  } 
-&.header--menu-open .header-menu { 
-  opacity: 1; 
-  visibility: visible;
-  }
-  .header-display-mobile {
-    display:flex;
-    justify-content: space-between;
-    .header-title-nav-wrapper {
-      display:block;
-      margin:0;
-      width:100%;
+  &.release-the-burger {
+    .header .header-burger {
+      display:flex;
+    } 
+  .header-nav, .header-actions {
+    display:none
+    } 
+  &.header--menu-open .header-menu { 
+    opacity: 1; 
+    visibility: visible;
+    }
+    .header-display-mobile {
+      display:flex;
+      justify-content: space-between;
+      .header-title-nav-wrapper {
+        display:block;
+        margin:0;
+        width:100%;
+      }
+    }
+    .header-display-desktop {
+      display:none;
     }
   }
-  .header-display-desktop {
-    display:none;
-  }
-}
 
 
   // FOLDER ICONS
@@ -714,6 +715,7 @@ body.primary-button-shape-oval,
 }
 
   }
+}
 
 /////////////////////////////////////// CART
 ///////////////////////////////////////
@@ -1160,8 +1162,6 @@ body:not(.sqs-edit-mode-active) {
       font-weight: 700;
       margin-top: 0; // Remove default margin
     }
-
-    .testimonial-body {}
   }
 }
 

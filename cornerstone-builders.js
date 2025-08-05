@@ -105,6 +105,7 @@
         const isEnabled = !metaTag || metaTag.getAttribute('enabled') !== 'false';
         
         if (!isEnabled) {
+            // When disabled, do nothing - let Squarespace handle the header natively
             return;
         }
         
