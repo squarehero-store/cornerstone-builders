@@ -120,6 +120,15 @@
     // Dark mode header functionality
     function setupDarkModeHeader() {
         const metaTag = document.querySelector('meta[squarehero-feature="header"]');
+        
+        // Check if header functionality is enabled first
+        const isEnabled = !metaTag || metaTag.getAttribute('enabled') !== 'false';
+        
+        if (!isEnabled) {
+            // When disabled, do nothing - let Squarespace handle the header natively
+            return;
+        }
+        
         if (metaTag && metaTag.getAttribute('darkmode') === 'true') {
             const header = document.querySelector('#header');
             if (header) {
@@ -220,6 +229,15 @@
 
     // Hamburger menu functionality
     function setupHamburgerMenu() {
+        // Check if header functionality is enabled (default to true if not specified)
+        const metaTag = document.querySelector('meta[squarehero-feature="header"]');
+        const isEnabled = !metaTag || metaTag.getAttribute('enabled') !== 'false';
+        
+        if (!isEnabled) {
+            // When disabled, do nothing - let Squarespace handle the menu natively
+            return;
+        }
+        
         function debounce(func, wait) {
             let timeout;
             return function(...args) {
