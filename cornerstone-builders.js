@@ -99,6 +99,15 @@
 
     // Header functionality
     function setupHeaderFunctionality() {
+        const metaTag = document.querySelector('meta[squarehero-feature="header"]');
+        
+        // Check if header functionality is enabled (default to true if not specified)
+        const isEnabled = !metaTag || metaTag.getAttribute('enabled') !== 'false';
+        
+        if (!isEnabled) {
+            return;
+        }
+        
         const headerActionsRight = document.querySelector('.header-nav');
         const headerTitle = document.querySelector('.header-display-desktop');
         if (headerActionsRight && headerTitle) {
